@@ -1,7 +1,9 @@
 const Axios = require('axios');
 const Canvas = require('canvas');
 const Express = require('express');
-const Constants = require('../constants');
+const Fs = require('fs');
+
+Constants = JSON.parse(Fs.readFileSync('constants.json'));
 
 const router = Express.Router();
 
