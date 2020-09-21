@@ -10,6 +10,8 @@ p = JSON.parse(Fs.readFileSync('private.json'))
 app.use(function(req, res, next){
   let ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
 
+  console.log(ip);
+
   if (p.allowed.includes(ip)) {
     next(); // move on to next middleware
   } else {
