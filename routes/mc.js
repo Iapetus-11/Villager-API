@@ -3,7 +3,7 @@ const Canvas = require('canvas');
 const Express = require('express');
 const Fs = require('fs');
 
-Constants = JSON.parse(Fs.readFileSync(`${__dirname}/../constants.json`));
+const Constants = JSON.parse(Fs.readFileSync(`${__dirname}/../constants.json`));
 
 const router = Express.Router();
 
