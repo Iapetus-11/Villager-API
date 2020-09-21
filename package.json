@@ -10,7 +10,7 @@
   "contributors": [
     {
       "name": "Iapetus-11"
-    },
+    }
   ],
   "dependencies": {
     "axios": "^0.19.2",
