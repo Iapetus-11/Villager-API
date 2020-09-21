@@ -1,0 +1,21 @@
+{
+  "name": "MC-Util-API",
+  "version": "1.0.0",
+  "description": "An API with several useful Minecraft-related endpoints, made primarily for Villager Bot",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iapetus-11/mc-util-api.git"
+  },
+  "contributors": [
+    {
+      "name": "Iapetus-11"
+    },
+  ],
+  "dependencies": {
+    "axios": "^0.19.2",
+    "canvas": "^2.6.1",
+    "express": "^4.8.7",
+    "helmet": "^3.23.3"
+  }
+}
