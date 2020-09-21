@@ -1,7 +1,6 @@
 const Axios = require('axios');
 const Canvas = require('canvas');
 const Express = require('express');
-const RateLimit = require('express-rate-limit');
 const Constants = require('../constants');
 
 const router = Express.Router();
@@ -212,17 +211,7 @@ async function renderServerImage(host, port, customName, doStop) {
   return image;
 }
 
-function handleRateLimit(req, res) {
-  res.status(429).json({
-    success: false,
-    message: 'Rate limit was exceeded, try again later.',
-    limit: req.rateLimit.limit,
-    current: req.rateLimit.current,
-    remaining: req.rateLimit.remaining
-  });
-}
-
-router.get('/mcping', RateLimit({windowMs: 3000, max: 2, handler: handleRateLimit}) /* 2 every 3 sec*/, (req, res) => { // checks the status of a minecraft server, takes query params host and port
+router.get('/mcping', (req, res) => { // checks the status of a minecraft server, takes query params host and port
   let host = req.query.host;
   let port = parseInt(req.query.port);
 
@@ -262,7 +251,7 @@ router.get('/mcping', RateLimit({windowMs: 3000, max: 2, handler: handleRateLimi
   });
 });
 
-router.get('/mcpingimg', RateLimit({windowMs: 5000, max: 2, handler: handleRateLimit}) /*2 every 5 sec*/, (req, res) => { // checks the status of an mc server and generates a pretty image
+router.get('/mcpingimg', (req, res) => { // checks the status of an mc server and generates a pretty image
   let host = req.query.host;
   let port = parseInt(req.query.port);
   let imgOnly = req.query.imgonly;
@@ -324,7 +313,7 @@ router.get('/mcpingimg', RateLimit({windowMs: 5000, max: 2, handler: handleRateL
   });
 });
 
-router.get('/serverfavi', RateLimit({windowMs: 4000, max: 2, handler: handleRateLimit}) /* 2 every 4 sec*/, (req, res) => { // checks the status of a minecraft server, takes query params host and port
+router.get('/serverfavi', (req, res) => { // checks the status of a minecraft server, takes query params host and port
   let host = req.query.host;
   let port = parseInt(req.query.port);
 
