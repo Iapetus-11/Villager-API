@@ -19,6 +19,8 @@ app.use(function(req, res, next){
   }
 });
 
+app.use('/mc', require('./routes/mc'));
+
 app.listen(p.port, () => {
   console.log(`Server running on port ${p.port}.`);
 });
