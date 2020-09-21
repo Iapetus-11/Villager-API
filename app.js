@@ -10,9 +10,7 @@ app.use(Helmet());
 app.use(function(req, res, next){
   let ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
 
-  console.log(ip);
-
-  if (p.allowed.includes(ip)) {
+  if (p.allowed.includes(ip) || req.hostname.includes('discord.com') || req.hostname.includes('discordapp.com')) {
     next(); // move on to next middleware
   } else {
     res.status(401).end(); // 401 unauthed
