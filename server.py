@@ -10,7 +10,7 @@ from time import sleep, time
 import json
 
 with open('private.json', 'r') as private:
-    allowed_ips = json.load(private)['allowed_ips']
+    allowed_ips = json.load(private)['allowed']
 
 # default / offline server
 default = {
