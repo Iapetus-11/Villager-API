@@ -7,10 +7,6 @@ from mcstatus import MinecraftServer as mcstatus
 from pyraklib.protocol.UNCONNECTED_PING import UNCONNECTED_PING
 from pyraklib.protocol.UNCONNECTED_PONG import UNCONNECTED_PONG
 from time import sleep, time
-import json
-
-with open('constants.json', 'r') as c:
-    constants = json.loads(c)
 
 # default / offline server
 default = {
