@@ -217,7 +217,7 @@ async def handler(r):
     jj = await r.json()
 
     host = jj.get('host')
-    if host is None or not await self.validate(host):
+    if host is None or not await validate(host):
         return web.Response(status=400)  # 400 bad req
 
     try:
