@@ -206,6 +206,10 @@ async def unified_mcping(server_str, _port=None, _ver=None):
 
         return default
 
+async def validate(host):
+    if '..' in host: return False
+    return True
+
 async def handler(r):
     if r.remote not in ('::1', 'localhost', '127.0.0.1'):
         return web.Response(status=401)  # 401 unauthed
@@ -213,8 +217,11 @@ async def handler(r):
     jj = await r.json()
 
     host = jj.get('host')
-    if host is None:
+    if host is None or not await self.validate(host):
         return web.Response(status=400)  # 400 bad req
+
+    if :
+        return web.Response(status=400)
 
     try:
         port = int(jj.get('port'))
