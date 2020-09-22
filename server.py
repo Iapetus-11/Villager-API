@@ -9,9 +9,6 @@ from pyraklib.protocol.UNCONNECTED_PONG import UNCONNECTED_PONG
 from time import sleep, time
 import json
 
-with open('private.json', 'r') as private:
-    allowed_ips = json.load(private)['allowed']
-
 # default / offline server
 default = {
     'online': False, # boolean
@@ -210,7 +207,7 @@ async def unified_mcping(server_str, _port=None, _ver=None):
         return default
 
 async def handler(r):
-    if r.remote not in allowed_ips:
+    if r.remote not in ('::1', 'localhost', '127.0.0.1'):
         return web.Response(status=401)  # 401 unauthed
 
     jj = await r.json()
