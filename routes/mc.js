@@ -10,7 +10,7 @@ const router = Express.Router();
 Canvas.registerFont(`${__dirname}/../assets/Minecraftia.ttf`, {family: 'Minecraft', style: 'normal'});
 
 async function pingMCServer(host, port, doStop) {
-  let data = await Axios.get('http://localhost:6942/mcping', {headers: {'host': host, 'port': port}});
+  let data = await Axios.get('http://localhost:2304/mcping', {data: {'host': host, 'port': port}});
   if(data.data.motd == void(0) && doStop == void(0)) {
     return await pingMCServer(host, port, true);
   }
