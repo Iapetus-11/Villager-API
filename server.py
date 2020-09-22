@@ -208,6 +208,7 @@ async def unified_mcping(server_str, _port=None, _ver=None):
 
 async def validate(host):
     if '..' in host: return False
+    if '%' in host: return False
     if len(host) < 4: return False
     return True
 
