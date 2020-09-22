@@ -10,7 +10,7 @@ app.use(Helmet());
 app.use(function(req, res, next){
   console.log(req.params.k);
   console.log(p.k);
-  if (req.params.k == p.k) {
+  if (req.query.k == p.k) {
     next(); // move on to next middleware
   } else {
     res.status(401).end(); // 401 unauthed
