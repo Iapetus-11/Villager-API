@@ -9,6 +9,9 @@ from pyraklib.protocol.UNCONNECTED_PONG import UNCONNECTED_PONG
 from time import sleep, time
 import json
 
+with open('constants.json', 'r') as c:
+    constants = json.loads(c)
+
 # default / offline server
 default = {
     'online': False, # boolean
@@ -208,7 +211,11 @@ async def unified_mcping(server_str, _port=None, _ver=None):
 
 async def validate(host):
     if '..' in host: return False
-    if '%' in host: return False
+
+    for char in host:
+        if char not in 'abcdefghijklmnopqrstuvwxyz1234567890./:':
+            return False
+
     if len(host) < 4: return False
     return True
 
