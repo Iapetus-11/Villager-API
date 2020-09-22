@@ -213,12 +213,14 @@ async def handler(r):
     if r.remote not in allowed_ips:
         return web.Response(status=401)  # 401 unauthed
 
-    host = r.query.get('host')
+    jj = await r.json()
+
+    host = jj.get('host')
     if host is None:
         return web.Response(status=400)  # 400 bad req
 
     try:
-        port = int(r.query.get('port'))
+        port = int(jj.get('port'))
     except TypeError:
         port = None
     except ValueError:
