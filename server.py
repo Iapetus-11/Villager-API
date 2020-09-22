@@ -220,9 +220,6 @@ async def handler(r):
     if host is None or not await self.validate(host):
         return web.Response(status=400)  # 400 bad req
 
-    if :
-        return web.Response(status=400)
-
     try:
         port = int(jj.get('port'))
     except TypeError:
