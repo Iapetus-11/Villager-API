@@ -7,7 +7,7 @@ p = JSON.parse(Fs.readFileSync('private.json'));
 const app = Express();
 
 app.use(Helmet());
-app.use(function(req, res, next){
+/*app.use(function(req, res, next){
   let ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
 
   if (p.allowed.includes(ip) || req.hostname.includes('discord.com') || req.hostname.includes('discordapp.com')) {
@@ -16,6 +16,7 @@ app.use(function(req, res, next){
     res.status(401).end(); // 401 unauthed
   }
 });
+*/
 
 app.use('/mc', require('./routes/mc'));
 
