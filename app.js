@@ -17,6 +17,6 @@ app.use(function(req, res, next){
 
 app.use('/mc', require('./routes/mc'));
 
-app.listen(p.port, () => {
-  console.log(`Server running on port ${p.port}.`);
+app.listen(80, () => {
+  console.log(`Server running on port ${80}.`);
 });
