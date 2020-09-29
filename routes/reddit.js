@@ -16,6 +16,8 @@ async function updateCache(subreddits, limit) {
     imagesCache[subreddits] = [];
     let posts = redditRes.data.data.children;
 
+    console.log('got posts');
+
     for (i = 0; i < posts.length; i++) {
       let postData = posts[i].data;
 
@@ -35,6 +37,8 @@ async function updateCache(subreddits, limit) {
       }
     }
 
+    console.log('after for loop')
+
     return true;
   })
   .catch(e => {
@@ -46,7 +50,7 @@ async function updateCache(subreddits, limit) {
 router.get('/gimme/:subreddits', (req, res) => {
   let subreddits = req.params.subreddits;
 
-  if (((new Date()) - lastUpdate) / 1000 >= 60 || imagesCache[subreddits] == undefined || imagesCache[subreddits].length < 1) { // update cache if last update 30 seconds or more ago or cache is empty
+  if (((new Date()) - lastUpdate) / 1000 >= 60 || imagesCache[subreddits] === undefined || imagesCache[subreddits].length < 1) { // update cache if last update 30 seconds or more ago or cache is empty
     updateCache(subreddits, 10)
     .then(success => {
       let post = imagesCache[subreddits][Math.floor(Math.random() * imagesCache[subreddits].length)];
