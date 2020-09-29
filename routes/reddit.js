@@ -29,7 +29,7 @@ router.get('/gimme/:subreddits', (req, res) => {
             subreddit: postData.subreddit,
             author: postData.author,
             title: postData.title,
-            permalink: postData.permalink,
+            permalink: 'https://reddit.com' + postData.permalink,
             url: postData.url,
             upvotes: postData.ups,
             downs: postData.downs,
