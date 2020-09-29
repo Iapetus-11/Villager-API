@@ -10,7 +10,7 @@ var lastUpdate;
 router.get('/gimme/:subreddits', (req, res) => {
   let subreddits = req.params.subreddits;
 
-  if (((new Date()) - lastUpdate) / 1000 >= 30 || imagesCache[subreddits].length < 1) { // update cache if last update 30 seconds or more ago or cache is empty
+  if (((new Date()) - lastUpdate) / 1000 >= 30 || imagesCache[subreddits] == undefined || imagesCache[subreddits].length < 1) { // update cache if last update 30 seconds or more ago or cache is empty
     Axios.get('https://reddit.com/r/' + subreddits)
     .then(redditRes => {
       if (redditRes.status != 200) {
