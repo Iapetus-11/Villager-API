@@ -27,11 +27,13 @@ router.get('/gimme/:subreddits', (req, res) => {
         imagesCache[subreddits].push(images[i].attribs.src);
       }
 
-      res.status(200).json({success: true, imageUrl: imagesCache[Math.round(Math.random() * imagesCache.length)]});
+      let image = imagesCache[subreddits][Math.round(Math.random() * imagesCache.length)];
+      res.status(200).json({success: true, imageUrl: image});
     })
     .catch(e => console.log(e));
   } else {
-    res.status(200).json({success: true, imageUrl: imagesCache[Math.round(Math.random() * imagesCache.length)]});
+    let image = imagesCache[subreddits][Math.round(Math.random() * imagesCache.length)];
+    res.status(200).json({success: true, imageUrl: image});
   }
 });
 
