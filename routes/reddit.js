@@ -16,9 +16,10 @@ router.get('/gimme/:subreddits', (req, res) => {
 
     let html = Cheerio.load(redditRes.data);
     let images = html('._2_tDEnGMLxpM6uOa2kaDB3.ImageBox-image.media-element._1XWObl-3b9tPy64oaG6fax');
-    let post = images.initialize[Math.round(Math.random() * images.length)];
 
-    res.status(200).json({success: true, imageUrl: image.attribs.src});
+    let post = images[Math.round(Math.random() * images.length)];
+
+    res.status(200).json({success: true, imageUrl: post.attribs.src});
   })
   .catch(e => console.log(e));
 });
