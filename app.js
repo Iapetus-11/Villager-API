@@ -8,7 +8,7 @@ const app = Express();
 
 app.use(Helmet());
 app.use(function(req, res, next){
-  console.log(req);
+  console.log(req.headers);
   if (req.get('Authorization') == p.auth || req.hostname == 'discord.com' || req.hostname == 'cdn.discordapp.com' || req.ip == '::1' || req.ip == 'localhost') {
     next(); // move on to next middleware
   } else {
