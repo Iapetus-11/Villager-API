@@ -16,6 +16,7 @@ app.use(function(req, res, next){
 });
 
 app.use('/mc', require('./routes/mc'));
+app.use('/reddit', require('./routes/reddit'));
 
 app.listen(80, () => {
   console.log(`Server running on port ${80}.`);
