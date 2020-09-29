@@ -4,6 +4,9 @@ const Axios = require('axios');
 
 const router = Express.Router();
 
+var imagesCache = [];
+var lastUpdate;
+
 router.get('/gimme/:subreddits', (req, res) => {
   let url = 'https://reddit.com/r/' + req.params.subreddits;
 
@@ -14,12 +17,16 @@ router.get('/gimme/:subreddits', (req, res) => {
       return;
     }
 
-    let html = Cheerio.load(redditRes.data);
-    let images = html('._2_tDEnGMLxpM6uOa2kaDB3.ImageBox-image.media-element._1XWObl-3b9tPy64oaG6fax');
+    if (((new Date()) - lastUpdate) / 1000 >= 30 || imagesCache.length < 1) { // update cache if last update 30 seconds or more ago or cache is empty
+      let html = Cheerio.load(redditRes.data);
+      let images = html('._2_tDEnGMLxpM6uOa2kaDB3.ImageBox-image.media-element._1XWObl-3b9tPy64oaG6fax');
 
-    let post = images[Math.round(Math.random() * images.length)];
+      imagesCache = [];
 
-    res.status(200).json({success: true, imageUrl: post.attribs.src});
+      images.forEach(elem => imagesCache.push(elem.attribs.src));
+    }
+
+    res.status(200).json({success: true, imageUrl: imagesCache[Math.round(Math.random() * imagesCache.length)]});
   })
   .catch(e => console.log(e));
 });
