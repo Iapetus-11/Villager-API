@@ -6,7 +6,7 @@ const router = Express.Router();
 var imagesCache = []; // should be dictionary of lists {'subreddits': []}
 var lastUpdate;
 
-async def updateCache(subreddits, limit) {
+async function updateCache(subreddits, limit) {
   Axios.get(`https://reddit.com/r/${subreddits}/hot/.json?limit=${limit}`)
   .then(redditRes => {
     if (redditRes.status != 200) {
