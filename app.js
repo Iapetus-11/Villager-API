@@ -8,8 +8,7 @@ const app = Express();
 
 app.use(Helmet());
 app.use(function(req, res, next){
-  console.log(req.headers);
-  if (req.get('Authorization') == p.auth || req.hostname == 'discord.com' || req.hostname == 'cdn.discordapp.com' || req.ip == '::1' || req.ip == 'localhost') {
+  if (req.get('Authorization') == p.auth || (req.get('user-agent') == 'Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com/)' && req.query.k == p.query_k) {
     next(); // move on to next middleware
   } else {
     res.status(401).end(); // 401 unauthed

@@ -1,3 +1,4 @@
 {
-  "auth": "Authorization"
+  "auth": "Authorization",
+  "query_k": "query auth"
 }
