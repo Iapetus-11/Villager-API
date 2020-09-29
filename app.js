@@ -8,10 +8,7 @@ const app = Express();
 
 app.use(Helmet());
 app.use(function(req, res, next){
-  console.log((req.query.k == p.query_k && cfIps.includes(req.ip)));
-  console.log(req.ip);
-  console.log(req.query.k == p.query_k);
-  if (req.get('Authorization') == p.auth || (req.query.k == p.query_k)) {
+  if (req.get('Authorization') == p.auth || (req.query.k == p.query_k && req.route.path == '/mc/mcpingimg')) {
     next(); // move on to next middleware
   } else {
     res.status(401).end(); // 401 unauthed
