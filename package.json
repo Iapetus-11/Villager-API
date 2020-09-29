@@ -1,7 +1,7 @@
 {
-  "name": "MC-Util-API",
-  "version": "1.0.0",
-  "description": "An API with several useful Minecraft-related endpoints, made primarily for Villager Bot",
+  "name": "Villager-API",
+  "version": "0.0.1",
+  "description": "An API with several useful Minecraft-related and otherwise endpoints, made primarily for Villager Bot",
   "main": "app.js",
   "repository": {
     "type": "git",
