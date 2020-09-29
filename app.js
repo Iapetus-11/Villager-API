@@ -2,7 +2,7 @@ const Express = require('express');
 const Helmet = require('helmet');
 const Fs = require('fs');
 
-p = JSON.parse(Fs.readFileSync('private.json'));
+const p = JSON.parse(Fs.readFileSync('private.json'));
 
 const app = Express();
 
