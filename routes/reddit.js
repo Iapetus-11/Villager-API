@@ -41,7 +41,7 @@ async function updateCache(subreddits, limit) {
 router.get('/gimme/:subreddits', (req, res) => {
   let subreddits = req.params.subreddits;
 
-  if (((new Date()) - lastUpdate) / 1000 >= 60 || imagesCache[subreddits] === undefined || imagesCache[subreddits].length < 1) { // update cache if last update 30 seconds or more ago or cache is empty
+  if (((new Date()) - lastUpdate) / 1000 >= 30 || imagesCache[subreddits] === undefined || imagesCache[subreddits].length < 1) { // update cache if last update 30 seconds or more ago or cache is empty
     updateCache(subreddits, 10)
     .then(success => {
       let post = imagesCache[subreddits][Math.floor(Math.random() * imagesCache[subreddits].length)];
