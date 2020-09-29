@@ -6,7 +6,7 @@ const router = Express.Router();
 var imagesCache = []; // should be dictionary of lists {'subreddits': []}
 var lastUpdate;
 
-async function updateCache(subreddits, limit) {
+function updateCache(subreddits, limit) {
   Axios.get(`https://reddit.com/r/${subreddits}/hot/.json?limit=${limit}`)
   .then(redditRes => {
     if (redditRes.status != 200) {
@@ -50,19 +50,19 @@ async function updateCache(subreddits, limit) {
 router.get('/gimme/:subreddits', (req, res) => {
   let subreddits = req.params.subreddits;
 
-  if (((new Date()) - lastUpdate) / 1000 >= 60 || imagesCache[subreddits] === undefined || imagesCache[subreddits].length < 1) { // update cache if last update 30 seconds or more ago or cache is empty
-    updateCache(subreddits, 10)
-    .then(success => {
-      let post = imagesCache[subreddits][Math.floor(Math.random() * imagesCache[subreddits].length)];
-      res.status(200).json(Object.assign({}, {success: true}, post));
+  console.log(imagesCache[subreddits]);
 
-      if (success) {
-        updateCache(subreddits, 75)
-        .then(success => {})
-        .catch(e => console.log(e));
-      }
-    })
-    .catch(e => console.log(e));
+  if (((new Date()) - lastUpdate) / 1000 >= 60 || imagesCache[subreddits] === undefined || imagesCache[subreddits].length < 1) { // update cache if last update 30 seconds or more ago or cache is empty
+    let success = updateCache(subreddits, 10);
+
+    console.log(imagesCache[subreddits]);
+
+    let post = imagesCache[subreddits][Math.floor(Math.random() * imagesCache[subreddits].length)];
+    res.status(200).json(Object.assign({}, {success: true}, post));
+
+    if (success) {
+      updateCache(subreddits, 75);
+    }
   } else {
     let post = imagesCache[subreddits][Math.floor(Math.random() * imagesCache[subreddits].length)];
     res.status(200).json(Object.assign({}, {success: true}, post));
