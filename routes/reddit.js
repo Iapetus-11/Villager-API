@@ -20,3 +20,5 @@ router.get('/gimme/:subreddits', (req, res) => {
   })
   .catch(e => console.log(e));
 });
+
+module.exports = router;
