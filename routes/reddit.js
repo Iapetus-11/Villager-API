@@ -55,7 +55,7 @@ router.get('/gimme/:subreddits', (req, res) => {
         .catch(e => console.log(e));
       }
     })
-    .catch(e => console.log(e))
+    .catch(e => console.log(e));
   } else {
     let post = imagesCache[subreddits][Math.floor(Math.random() * imagesCache[subreddits].length)];
     res.status(200).json(Object.assign({success: true}, post));
