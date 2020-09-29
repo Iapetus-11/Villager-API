@@ -23,7 +23,9 @@ router.get('/gimme/:subreddits', (req, res) => {
 
       imagesCache = [];
 
-      images.forEach(elem => imagesCache.push(elem.attribs.src));
+      for (i = 0; i < images.length; i++) {
+        imagesCache.push(images[i].attribs.src);
+      }
     }
 
     res.status(200).json({success: true, imageUrl: imagesCache[Math.round(Math.random() * imagesCache.length)]});
