@@ -1,2 +1,2 @@
-# mc-util-api
-A Minecraft related API, designed to be used by Villager Bot
+# Villager-API
+A Minecraft (and other things) related API, designed to be used by [Villager Bot](https://github.com/Villager-Dev/Villager-Bot)
