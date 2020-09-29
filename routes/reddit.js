@@ -49,7 +49,9 @@ router.get('/gimme/:subreddits', (req, res) => {
 
       if (success) {
         updateCache(subreddits, 75)
-        .then(success => {})
+        .then(success => {
+          lastUpdate = new Date();
+        })
         .catch(e => console.log(e));
       }
     })
