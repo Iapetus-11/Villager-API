@@ -1,5 +1,3 @@
 {
-  "k": "bruhCraftHD",
-  "redditClient": "reddit client id",
-  "redditSecret": "reddit secret auth"
+  "auth": "Authorization"
 }
