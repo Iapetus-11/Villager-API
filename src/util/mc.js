@@ -170,7 +170,7 @@ async function drawCardText(ctx, status, mcserver, customName) {
   }
 }
 
-export function genServerFavi(mcserver, customName, status) {
+export function genStatusCard(mcserver, customName, status) {
   return new Promise((resolve, reject) => {
     let image = Canvas.createCanvas(768, 140);
     let ctx = image.getContext('2d');
