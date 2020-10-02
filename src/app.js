@@ -37,6 +37,7 @@ function skipHandler(req, res) { // tell rate limiter whether to ignore that req
 const redditRateLimiter = RateLimit({
   windowMs: 20*1000,
   max: 3,
+  keyGenerator: keyGenerator,
   skip: skipHandler,
   handler: limitHandler
 });
@@ -44,6 +45,7 @@ const redditRateLimiter = RateLimit({
 const mcRateLimiter = RateLimit({
   windowMs: 30*1000,
   max: 3,
+  keyGenerator: keyGenerator,
   skip: skipHandler,
   handler: limitHandler
 });
