@@ -16,7 +16,7 @@ async function updateCache(subreddits, limit) {
   imagesCache[subreddits] = [];
   let posts = redditRes.data.data.children;
 
-  for (i = 0; i < posts.length; i++) {
+  for (let i = 0; i < posts.length; i++) {
     let postData = posts[i].data;
 
     if (!(postData.removal_reason || postData.is_video || postData.pinned || postData.stickied || postData.selftext)) {
