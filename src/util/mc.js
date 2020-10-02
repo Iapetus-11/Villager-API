@@ -3,7 +3,7 @@ import Canvas from 'canvas';
 // utility stuff
 import * as CnvsUtil from './canvas.js';
 
-Canvas.registerFont('./assets/Minecraftia.ttf', {family: 'Minecraft', style: 'normal'});
+Canvas.registerFont('./src/assets/Minecraftia.ttf', {family: 'Minecraft', style: 'normal'});
 
 export function status(mcserver, stop) {
   return new Promise((resolve, reject) => {
