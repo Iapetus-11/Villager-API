@@ -28,7 +28,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
   * Example: `GET https://betterapi.net/serverfavi/hypixel.net:25565`
   * Returns an image, returns JSON if an error occurs
 
-<br><br>
+<br>
 
 ### **Reddit Related Endpoints/Routes**
 * [Ratelimit: 3 requests / 20 seconds] (Applies to all endpoints under /reddit/)
