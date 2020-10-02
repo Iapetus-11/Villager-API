@@ -1,5 +1,5 @@
 # Villager-API
-A Minecraft (and other things) related API, designed to be used by [Villager Bot](https://github.com/Villager-Dev/Villager-Bot) [More About Villager Bot](https://disbots.gg/bot/639498607632056321)
+A Minecraft (and other things) related API, designed to be used by [Villager Bot](https://github.com/Villager-Dev/Villager-Bot) **|** [More About Villager Bot](https://disbots.gg/bot/639498607632056321)
 
 ## Routes / Endpoints
 #### `betterapi.net/mc/` **Endpoints** [Ratelimit: 3 requests / 20 seconds]
