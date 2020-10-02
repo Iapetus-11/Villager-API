@@ -34,7 +34,37 @@ router.get('/mcstatus/:mcserver', (req, res) => {
   });
 });
 
-router.get('/mcstatusimg/:mcserver', (req, res) => {
+router.get('/servercard/:mcserver', (req, res) => {
+  let mcserver = req.params.mcserver;
+
+  if (mcserver.length > 200) {
+    res.status(400).json({success: false, message: 'The mcserver parameter must not be longer than 200 characters'});
+    return;
+  }
+
+  if (mcserver.length < 5) {
+    res.status(400).json({success: false, message: 'The mcserver parameter must be longer than 4 characters'});
+    return;
+  }
+
+  MCUtil.status(mcserver)
+  .then(status => {
+    MCUtil.genStatusCard(status)
+    .then(image => {
+      CnvsUtil.sendImage(image, res, 'status.png');
+    })
+    .catch(e => {
+      console.log(e);
+      res.status(500).json({success: false, message: 'Oops... Something went wrong on our end'});
+    });
+  })
+  .catch(e => {
+    console.log(e);
+    res.status(500).json({success: false, message: 'Oops... Something went wrong on our end'});
+  });
+});
+
+router.get('/serverfavicon/:mcserver', (req, res) => {
   let mcserver = req.params.mcserver;
 
   if (mcserver.length > 200) {
