@@ -44,6 +44,6 @@ app.use(Helmet());
 //app.use('/reddit', redditRateLimiter, RedditRoutes);
 app.use('/mc', mcRateLimiter, MCRoutes);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, function() {
   console.log(`Server running on port ${process.env.PORT}.`);
 });
