@@ -3,7 +3,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 * The api is currently running and accessible at `betterapi.net`
 
 ## Routes / Endpoints
-#### **Minecraft Related Endpoints/Routes** `betterapi.net/mc/` [Ratelimit: 3 requests / 20 seconds]
+### **Minecraft Related Endpoints/Routes** `betterapi.net/mc/` [Ratelimit: 3 requests / 20 seconds]
 * `GET /mc/mcstatus/:mcserver`
   * Takes one **url** parameter:
     * `mcserver` (required) which is the host/ip of the server
@@ -29,7 +29,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 <br><br>
 
-#### **Reddit Related Endpoints/Routs** `betterapi.net/reddit/` [Ratelimit: 3 requests / 30 seconds]
+### **Reddit Related Endpoints/Routes** `betterapi.net/reddit/` [Ratelimit: 3 requests / 30 seconds]
 * `GET /reddit/gimme/:subreddits`
   * takes one parameter **in the url**
     * `:subreddits` (required) the subreddits to fetch images from
