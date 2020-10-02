@@ -21,7 +21,7 @@ function limitHandler(req, res) { // handler for if rate limit is reached
 }
 
 function skipHandler(req, res) { // tell rate limiter whether to ignore that req or not
-  return (process.env.BYPASS_AUTH == req.get('Authorization'));
+  return (process.env.BYPASS == req.get('Authorization'));
 }
 
 const redditRateLimiter = RateLimit({
