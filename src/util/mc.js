@@ -191,7 +191,7 @@ export function genStatusCard(mcserver, customName, status) {
 
       let drawers = [];
 
-      drawers.push(CnvsUtil.drawImageAsync(ctx, (status.favicon ? status.favicon : './src/assets/unknown_pack.png')));
+      drawers.push(CnvsUtil.drawImageAsync(ctx, (status.favicon ? status.favicon : './src/assets/unknown_pack.png'), 6, 6, 128, 128));
       drawers.push(drawCardText(ctx, status, mcserver, customName));
 
       Promise.all(drawers)
