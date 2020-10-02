@@ -1,12 +1,12 @@
+from time import sleep, time
 from aiohttp import web
 import asyncio
 import concurrent.futures
 from functools import partial
 import socket
-from mcstatus import MinecraftServer as mcstatus
 from pyraklib.protocol.UNCONNECTED_PING import UNCONNECTED_PING
 from pyraklib.protocol.UNCONNECTED_PONG import UNCONNECTED_PONG
-from time import sleep, time
+from mcstatus import MinecraftServer as mcstatus
 
 # default / offline server
 default = {
