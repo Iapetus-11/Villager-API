@@ -45,7 +45,7 @@ router.get('/servercard/:mcserver', (req, res) => {
 
   MCUtil.status(mcserver)
   .then(status => {
-    MCUtil.genStatusCard(status)
+    MCUtil.genStatusCard(mcserver, , status)
     .then(image => {
       CnvsUtil.sendImage(image, res, 'status.png');
     })
