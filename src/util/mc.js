@@ -87,7 +87,7 @@ async function drawCardText(ctx, status, mcserver, customName) {
   if (motdVer == 'json_rich_array') {
     motdVer = 'rich_text';
     let newMotd = '';
-    for (i = 0; i < motd.length; motd++) {
+    for (let i = 0; i < motd.length; motd++) {
       newMotd = newMotd.concat(motd[i]);
     }
     motd = newMotd;
@@ -101,7 +101,7 @@ async function drawCardText(ctx, status, mcserver, customName) {
     let drawnPixelsVerti = 0;
     let currentColor = 'FFFFFF';
     let lastColor = 'FFFFFF';
-    for (i = 0; i < motd.length; i++) { // loop which does something like .split() but it treats color codes as one character
+    for (let i = 0; i < motd.length; i++) { // loop which does something like .split() but it treats color codes as one character
       if (motd.charAt(i) == '§') {
         try {
           currentColor = Constants.minecraftColorsCodes[motd.charAt(i+1).toLowerCase()][2];
