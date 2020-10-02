@@ -9,13 +9,13 @@ const app = Express();
 
 app.use(Helmet());
 
-function limitHandler(req, res) {
-  if ()
+function skipHandler(req, res) {
+  return (process.env.BYPASS_AUTH == req.get('Authorization'));
 }
 
-app.use('/mc', RateLimit({windowMs: 30*1000, max: 2}), require('./routes/mc'));
-app.use('/reddit', RateLimit({windowMs: 20*1000, max: 2}), require('./routes/reddit'));
+app.use('/reddit', RateLimit({windowMs: 20*1000, max: 2, skip: skipHandler}), require('./routes/reddit'));
+app.use('/mc', RateLimit({windowMs: 30*1000, max: 2, skip: skipHandler}), require('./routes/mc'));
 
-app.listen(80, () => {
-  console.log(`Server running on port ${80}.`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}.`);
 });
