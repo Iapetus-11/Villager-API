@@ -21,5 +21,5 @@ A Minecraft (and other things) related API, designed to be used by [Villager Bot
 #### `betterapi.net/reddit/` Endpoints
 * `GET /reddit/gimme/:subreddits`
   * takes one parameter **in the url**
-  * `:subreddits` (required) the subreddits to fetch images from
-    * can either be one subreddit (`GET betterapi.net/reddit/gimme/dankmemes`) or multiple (`GET betterapi.net/reddit/gimme/dankmemes+memes+me_irl+meme`)
+    * `:subreddits` (required) the subreddits to fetch images from
+      * can either be one subreddit (`GET betterapi.net/reddit/gimme/dankmemes`) or multiple (`GET betterapi.net/reddit/gimme/dankmemes+memes+me_irl+meme`)
