@@ -1,3 +1,4 @@
+import Canvas from 'canvas';
 
 // make a rectangular clip with round edges on the given ctx
 export function roundEdges(ctx, x, y, width, height, radius) { // def didn't steal this from code I did on disbots.gg hehe
