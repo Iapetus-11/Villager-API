@@ -4,14 +4,40 @@ import DotEnv from 'dotenv';
 import Helmet from 'helmet';
 import Fs from 'fs';
 
-// import util
-import * from './util/ratelimit.js';
+DotEnv.config(); // initialize dotenv
 
 // import routes
 import redditRoutes from './routes/reddit.js';
 import mcRoutes from './routes/mc.js';
 
-DotEnv.config(); // initialize dotenv
+function limitHandler(req, res) { // handler for if rate limit is reached
+  res.status(429).json({
+    success: false,
+    message: 'Too many requests! You have hit the rate limit.',
+    limit: req.rateLimit.limit,
+    current: req.rateLimit.current,
+    remaining: req.rateLimit.remaining
+  });
+  res.end();
+}
+
+function skipHandler(req, res) { // tell rate limiter whether to ignore that req or not
+  return (process.env.BYPASS_AUTH == req.get('Authorization'));
+}
+
+const redditRateLimiter = RateLimit({
+  windowMs: 20*1000,
+  max: 3,
+  skip: skipHandler,
+  handler: limitHandler
+});
+
+const mcRateLimiter = RateLimit({
+  windowMs: 30*1000,
+  max: 3,
+  skip: skipHandler,
+  handler: limitHandler
+});
 
 const app = Express();
 
