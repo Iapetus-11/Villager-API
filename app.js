@@ -9,15 +9,6 @@ const app = Express();
 
 app.use(Helmet());
 
-// old auth system
-// app.use(function(req, res, next){
-//   if (req.get('Authorization') == p.auth || (req.query.k == p.query_k && ['/mc/mcpingimg', '/mc/serverfavi'].includes(req.path))) {
-//     next(); // move on to next middleware
-//   } else {
-//     res.status(401).end(); // 401 unauthed
-//   }
-// });
-
 function limitHandler(req, res) {
   if ()
 }
