@@ -41,7 +41,7 @@ export function drawImageAsync(ctx, src, x, y, width, height) {
   return new Promise((resolve, reject) => {
     let image = new canvas.Image();
 
-    image.onload = () => {
+    image.onload = function() {
       ctx.drawImage(image, x, y, width, height);
       resolve();
     }
