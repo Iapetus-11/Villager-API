@@ -10,6 +10,16 @@ DotEnv.config(); // initialize dotenv
 import RedditRoutes from './routes/reddit.js';
 import MCRoutes from './routes/mc.js';
 
+function keyGenerator(req) {
+  let cfConnecting = req.get('CF-Connecting-IP');
+
+  if (cfConnecting) {
+    return cfConnecting;
+  } else {
+    return req.ip;
+  }
+}
+
 function limitHandler(req, res) { // handler for if rate limit is reached
   res.status(429).json({
     success: false,
