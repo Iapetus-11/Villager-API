@@ -2,7 +2,7 @@
   "name": "Villager-API",
   "version": "0.0.1",
   "description": "An API with several useful Minecraft-related and otherwise endpoints, made primarily for Villager Bot",
-  "main": "app.js",
+  "main": "src/app.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Iapetus-11/Villager-API.git"
