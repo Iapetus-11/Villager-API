@@ -4,42 +4,20 @@ import DotEnv from 'dotenv';
 import Helmet from 'helmet';
 import Fs from 'fs';
 
-DotEnv.config(); // basically initialize dotenv
+// import util
+import * from './util/ratelimit.js';
 
-function limitHandler(req, res) {
-  res.status(429).json({
-    success: false,
-    message: 'Too many requests! You have hit the rate limit.',
-    limit: req.rateLimit.limit,
-    current: req.rateLimit.current,
-    remaining: req.rateLimit.remaining
-  });
-  res.end();
-}
+// import routes
+import redditRoutes from './routes/reddit.js';
+import mcRoutes from './routes/mc.js';
 
-function skipHandler(req, res) {
-  return (process.env.BYPASS_AUTH == req.get('Authorization'));
-}
+DotEnv.config(); // initialize dotenv
 
 const app = Express();
 
-const redditRateLimiter = RateLimit({
-  windowMs: 20*1000,
-  max: 3,
-  skip: skipHandler,
-  handler: limitHandler
-});
-
-const mcRateLimiter = RateLimit({
-  windowMs: 30*1000,
-  max: 3,
-  skip: skipHandler,
-  handler: limitHandler
-});
-
 app.use(Helmet());
-app.use('/reddit', redditRateLimiter, require('./routes/reddit'));
-app.use('/mc', mcRateLimiter, require('./routes/mc'));
+app.use('/reddit', redditRateLimiter, redditRoutes);
+app.use('/mc', mcRateLimiter, mcRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}.`);
