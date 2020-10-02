@@ -17,8 +17,7 @@ function limitHandler(req, res) { // handler for if rate limit is reached
     limit: req.rateLimit.limit,
     current: req.rateLimit.current,
     remaining: req.rateLimit.remaining
-  });
-  res.end();
+  }).end();
 }
 
 function skipHandler(req, res) { // tell rate limiter whether to ignore that req or not
