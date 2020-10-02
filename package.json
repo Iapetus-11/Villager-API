@@ -16,6 +16,7 @@
     "axios": "^0.19.2",
     "canvas": "^2.6.1",
     "express": "^4.8.7",
-    "helmet": "^3.23.3"
+    "helmet": "^3.23.3",
+    "express-rate-limit": "^5.1.3"
   }
 }
