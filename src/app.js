@@ -7,7 +7,7 @@ import Fs from 'fs';
 DotEnv.config(); // initialize dotenv
 
 // import routes
-//import RedditRoutes from './routes/reddit.js';
+import RedditRoutes from './routes/reddit.js';
 import MCRoutes from './routes/mc.js';
 
 function limitHandler(req, res) { // handler for if rate limit is reached
@@ -41,7 +41,7 @@ const mcRateLimiter = RateLimit({
 const app = Express();
 
 app.use(Helmet());
-//app.use('/reddit', redditRateLimiter, RedditRoutes);
+app.use('/reddit', redditRateLimiter, RedditRoutes);
 app.use('/mc', mcRateLimiter, MCRoutes);
 
 app.listen(process.env.PORT, function() {
