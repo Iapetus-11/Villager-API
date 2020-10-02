@@ -7,7 +7,7 @@ const Constants = JSON.parse(Fs.readFileSync(`${__dirname}/../constants.json`));
 
 const router = Express.Router();
 
-Canvas.registerFont(`${__dirname}/../src/assets/Minecraftia.ttf`, {family: 'Minecraft', style: 'normal'});
+Canvas.registerFont(`${__dirname}/../assets/Minecraftia.ttf`, {family: 'Minecraft', style: 'normal'});
 
 async function pingMCServer(host, port, doStop) {
   let data = await Axios.get('http://localhost:2304/mcstatus', {data: {host: host, port: port}});
