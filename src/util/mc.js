@@ -1,4 +1,5 @@
 import Canvas from 'canvas';
+import Axios from 'axios';
 
 // utility stuff
 import * as CnvsUtil from './canvas.js';
