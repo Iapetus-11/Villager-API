@@ -7,7 +7,7 @@ const Constants = JSON.parse(Fs.readFileSync(`${__dirname}/../constants.json`));
 
 const router = Express.Router();
 
-Canvas.registerFont(`${__dirname}/../assets/Minecraftia.ttf`, {family: 'Minecraft', style: 'normal'});
+Canvas.registerFont(`${__dirname}/../src/assets/Minecraftia.ttf`, {family: 'Minecraft', style: 'normal'});
 
 async function pingMCServer(host, port, doStop) {
   let data = await Axios.get('http://localhost:2304/mcstatus', {data: {host: host, port: port}});
@@ -197,7 +197,7 @@ async function renderServerImage(host, port, customName, doStop) {
   ctx.imageSmoothingEnabled = false;
   ctx.quality = 'nearest'; // nearest cause dealing with pixels cause Minecraft ya
 
-  let bgImage = await Canvas.loadImage('assets/mcserver_background.png');
+  let bgImage = await Canvas.loadImage('src/assets/mcserver_background.png');
   ctx.drawImage(bgImage, 0, 0, 768, 140);
 
   let statusData = await pingMCServer(host, port); // "blocking" ping the mc server
