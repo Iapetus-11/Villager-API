@@ -196,7 +196,7 @@ export function genStatusCard(mcserver, customName, status) {
 
       Promise.all(drawers)
       .then(() => {
-        resolve();
+        resolve(image);
       })
       .catch(e => reject(e));
     })
