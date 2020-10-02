@@ -1,12 +1,12 @@
+from time import sleep, time
 from aiohttp import web
 import asyncio
 import concurrent.futures
 from functools import partial
 import socket
-from mcstatus import MinecraftServer as mcstatus
 from pyraklib.protocol.UNCONNECTED_PING import UNCONNECTED_PING
 from pyraklib.protocol.UNCONNECTED_PONG import UNCONNECTED_PONG
-from time import sleep, time
+from mcstatus import MinecraftServer as mcstatus
 
 # default / offline server
 default = {
@@ -22,25 +22,6 @@ default = {
     'plugins': [], # List['plugin', 'plugin']
     'gamemode': None # string
 }
-
-async def cleanup_args(server_str, _port=None):  # cleanup arguments given in the request
-    if ':' in server_str and _port is None:
-        split = server_str.split(':')
-        ip = split[0]
-        try:
-            port = int(split[1])
-        except ValueError:
-            return default
-    else:
-        ip = server_str
-        port = _port
-
-    if port is None:
-        str_port = ''
-        if ':' not in server_str:
-            str_port = ':25565'
-
-    return ip, port, str_port
 
 def ping_status(combined_server):  # all je servers support this
     try:
@@ -213,6 +194,16 @@ async def validate(host):
             return False
 
     if len(host) < 4: return False
+
+    s = host.split(':')
+    if len(s) > 1:
+        try:
+            p = int(s[1])
+            if p < 0 > 65535:
+                return False
+        except Exception:
+            return False
+
     return True
 
 async def handler(r):
@@ -221,24 +212,14 @@ async def handler(r):
 
     jj = await r.json()
 
-    host = jj.get('host')
-    if host is None:
+    mcserver = jj.get('mcserver')
+    if mcserver is None:
         return web.Response(status=400)  # 400 bad req
 
-    if not await validate(host):
+    if not await validate(mcserver):
         return web.json_response(default)
 
-    try:
-        port = int(jj.get('port'))
-    except TypeError:
-        port = None
-    except ValueError:
-        port = None
-
-    if port == 0:
-        port = None
-
-    status = await unified_mcping(host, port)
+    status = await unified_mcping(mcserver)
     return web.json_response(status)
 
 web_app = web.Application()

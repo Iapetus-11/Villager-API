@@ -1,9 +1,9 @@
-const Express = require('express');
-const Axios = require('axios');
+import Express from 'express';
+import Axios from 'axios';
 
 const router = Express.Router();
 
-var imagesCache = []; // should be dictionary of lists {'subreddits': []}
+var imagesCache = {}; // should be dictionary of lists {'subreddits': []}
 var lastUpdate;
 
 async function updateCache(subreddits, limit) {
@@ -42,7 +42,7 @@ router.get('/gimme/:subreddits', (req, res) => {
   let subreddits = req.params.subreddits;
 
   if (((new Date()) - lastUpdate) / 1000 >= 30 || imagesCache[subreddits] === undefined || imagesCache[subreddits].length < 1) { // update cache if last update 30 seconds or more ago or cache is empty
-    updateCache(subreddits, 10)
+    updateCache(subreddits, 5)
     .then(success => {
       let post = imagesCache[subreddits][Math.floor(Math.random() * imagesCache[subreddits].length)];
       res.status(200).json(Object.assign({success: true}, post));
@@ -62,4 +62,4 @@ router.get('/gimme/:subreddits', (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
