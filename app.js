@@ -3,6 +3,8 @@ const Express = require('express');
 const Helmet = require('helmet');
 const Fs = require('fs');
 
+require('dotenv').config(); // basically initialize dotenv
+
 const app = Express();
 
 app.use(Helmet());
@@ -15,6 +17,10 @@ app.use(Helmet());
 //     res.status(401).end(); // 401 unauthed
 //   }
 // });
+
+function limitHandler(req, res) {
+  if ()
+}
 
 app.use('/mc', RateLimit({windowMs: 30*1000, max: 2}), require('./routes/mc'));
 app.use('/reddit', RateLimit({windowMs: 20*1000, max: 2}), require('./routes/reddit'));
