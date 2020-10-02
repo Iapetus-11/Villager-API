@@ -10,7 +10,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
   * Example: `GET https://betterapi.net/serverfavi/hypixel.net:25565`
   * Returns a JSON response
 
-<br><br>
+<br>
 
 * `GET /mc/servercard/:mcserver`
   * takes one **url** and one [optional] **query** parameter:
@@ -19,7 +19,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
   * Example: `GET https://betterapi.net/servercard/hypixel.net:25565?customname=BruhCraftHD`
   * Returns an image, returns JSON if an error occurs
 
-<br><br>
+<br>
 
 * `GET /mc/serverfavi/:mcserver`
   * takes one **url** parameter:
@@ -27,7 +27,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
   * Example: `GET https://betterapi.net/serverfavi/hypixel.net:25565`
   * Returns an image, returns JSON if an error occurs
 
-<br><br><br>
+<br><br>
 
 #### **Reddit Related Endpoints/Routs** `betterapi.net/reddit/` [Ratelimit: 3 requests / 30 seconds]
 * `GET /reddit/gimme/:subreddits`
