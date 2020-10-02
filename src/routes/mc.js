@@ -303,7 +303,7 @@ router.get('/mcpingimg', (req, res) => { // checks the status of an mc server an
       image.toBuffer((err, buffer) => { // send image/canvas straight from buffer (without saving image)
         res.writeHead(200, {
           'Content-Type': 'image/png',
-          'Content-Disposition': 'attachment;filename=mcstatus.png',
+          'Content-Disposition': 'inline;filename=mcstatus.png',
           'Content-Length': buffer.length
         });
         res.end(Buffer.from(buffer, 'binary'));
@@ -357,7 +357,7 @@ router.get('/serverfavi', (req, res) => { // checks the status of a minecraft se
       image.toBuffer((err, buffer) => {
         res.writeHead(200, {
           'Content-Type': 'image/png',
-          'Content-Disposition': 'attachment;filename=server-icon.png',
+          'Content-Disposition': 'inline;filename=server-icon.png',
           'Content-Length': buffer.length
         });
 
