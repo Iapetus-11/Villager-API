@@ -182,13 +182,13 @@ export function genStatusCard(mcserver, customName, status) {
 
     ctx.save(); // create restore point
 
-    Canvas.loadImage('../assets/mcserver_background.png')
+    Canvas.loadImage('./src/assets/mcserver_background.png')
     .then(backgroundImage => {
       ctx.drawImage(backgroundImage, 0, 0, 768, 140);
 
       let drawers = [];
 
-      drawers.push(CnvsUtil.drawImageAsync(ctx, (status.favicon ? status.favicon : '../assets/unknown_pack.png')));
+      drawers.push(CnvsUtil.drawImageAsync(ctx, (status.favicon ? status.favicon : './src/assets/unknown_pack.png')));
       drawers.push(CnvsUtil.drawCardText(ctx, status, mcserver, customName));
 
       Promise.all(drawers)
