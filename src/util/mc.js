@@ -61,7 +61,7 @@ async function drawCardText(ctx, status, mcserver, customName) {
 
     motd.extra.push(motd.text);
 
-    for (i = 0; i < motd.extra.length; i++) {
+    for (let i = 0; i < motd.extra.length; i++) {
       if (motd.extra[i].color == void(0) || motd.extra[i].color == null) { // figure out color
         ctx.fillStyle = '#'.concat(Constants.minecraftColors[lastColor][2]); // if color field doesn't exist
       } else {
