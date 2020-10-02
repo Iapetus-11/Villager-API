@@ -1,9 +1,9 @@
-const Express = require('express');
-const Axios = require('axios');
+import Express from 'express';
+import Axios from 'axios';
 
 const router = Express.Router();
 
-var imagesCache = []; // should be dictionary of lists {'subreddits': []}
+var imagesCache = {}; // should be dictionary of lists {'subreddits': []}
 var lastUpdate;
 
 async function updateCache(subreddits, limit) {
@@ -62,4 +62,4 @@ router.get('/gimme/:subreddits', (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
