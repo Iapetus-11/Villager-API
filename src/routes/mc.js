@@ -31,6 +31,7 @@ router.get('/mcstatus/:mcserver', (req, res) => {
 });
 
 router.get('/servercard/:mcserver', (req, res) => {
+  let customName = req.query.customname;
   let mcserver = req.params.mcserver;
 
   if (mcserver.length > 200) {
@@ -45,7 +46,7 @@ router.get('/servercard/:mcserver', (req, res) => {
 
   MCUtil.status(mcserver)
   .then(status => {
-    MCUtil.genStatusCard(mcserver, , status)
+    MCUtil.genStatusCard(mcserver, customName, status)
     .then(image => {
       CnvsUtil.sendImage(image, res, 'status.png');
     })
