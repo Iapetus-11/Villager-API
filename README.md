@@ -2,7 +2,7 @@
 A Minecraft (and other things) related API, designed to be used by [Villager Bot](https://github.com/Villager-Dev/Villager-Bot)
 
 ## Routes / Endpoints
-#### `betterapi.net/mc/` Endpoints
+#### `betterapi.net/mc/` **Endpoints** [Ratelimit: 3 requests / 20 seconds]
 * `GET /mc/mcping?host=host&port=port`
   * takes two **query** parameters:
     * `host` (required) which is the host/ip of the server
@@ -18,7 +18,7 @@ A Minecraft (and other things) related API, designed to be used by [Villager Bot
     * `host` (required) which is the host/ip of the server
     * `port` (optional) the port of the server
 
-#### `betterapi.net/reddit/` Endpoints
+#### `betterapi.net/reddit/` **Endpoints** [Ratelimit: 3 requests / 30 seconds]
 * `GET /reddit/gimme/:subreddits`
   * takes one parameter **in the url**
     * `:subreddits` (required) the subreddits to fetch images from
