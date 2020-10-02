@@ -203,3 +203,16 @@ export function genStatusCard(mcserver, customName, status) {
     .catch(e => reject(e));
   });
 }
+
+export function genServerFavi(status) {
+  return new Promise((resolve, reject) => {
+    let image = Canvas.createCanvas(64, 64);
+
+    Canvas.loadImage(status.favicon)
+    .then(faviData => {
+      image.getContext('2d').drawImage(faviData);
+      resolve(image);
+    })
+    .catch(e => reject(e));
+  });
+}
