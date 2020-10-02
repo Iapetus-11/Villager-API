@@ -1,9 +1,10 @@
-const RateLimit = require('express-rate-limit');
-const Express = require('express');
-const Helmet = require('helmet');
-const Fs = require('fs');
+import RateLimit from 'express-rate-limit';
+import Express from 'express';
+import DotEnv from 'dotenv';
+import Helmet from 'helmet';
+import Fs from 'fs';
 
-require('dotenv').config(); // basically initialize dotenv
+DotEnv.config(); // basically initialize dotenv
 
 function limitHandler(req, res) {
   res.status(429).json({
