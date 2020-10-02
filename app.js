@@ -1,8 +1,7 @@
+const RateLimit = require('express-rate-limit');
 const Express = require('express');
 const Helmet = require('helmet');
 const Fs = require('fs');
-
-const p = JSON.parse(Fs.readFileSync('private.json'));
 
 const app = Express();
 
@@ -17,8 +16,8 @@ app.use(Helmet());
 //   }
 // });
 
-app.use('/mc', require('./routes/mc'));
-app.use('/reddit', require('./routes/reddit'));
+app.use('/mc', RateLimit({windowMs: 30*1000, max: 2}), require('./routes/mc'));
+app.use('/reddit', RateLimit({windowMs: 20*1000, max: 2}), require('./routes/reddit'));
 
 app.listen(80, () => {
   console.log(`Server running on port ${80}.`);
