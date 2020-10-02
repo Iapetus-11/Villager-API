@@ -169,7 +169,7 @@ async function drawCardText(ctx, status, mcserver, customName) {
   }
 }
 
-export async function genServerFavi(mcserver, customName, status) {
+export function genServerFavi(mcserver, customName, status) {
   return new Promise((resolve, reject) => {
     let image = Canvas.createCanvas(768, 140);
     let ctx = image.getContext('2d');
@@ -181,17 +181,20 @@ export async function genServerFavi(mcserver, customName, status) {
 
     ctx.save(); // create restore point
 
-    let backgroundImage = await Canvas.loadImage('../assets/mcserver_background.png');
-    ctx.drawImage(backgroundImage, 0, 0, 768, 140);
+    Canvas.loadImage('../assets/mcserver_background.png')
+    .then(backgroundImage => {
+      ctx.drawImage(backgroundImage, 0, 0, 768, 140);
 
-    let drawers = [];
+      let drawers = [];
 
-    drawers.push(CnvsUtil.drawImageAsync(ctx, (status.favicon ? status.favicon : '../assets/unknown_pack.png')));
-    drawers.push(CnvsUtil.drawCardText(ctx, status, mcserver, customName));
+      drawers.push(CnvsUtil.drawImageAsync(ctx, (status.favicon ? status.favicon : '../assets/unknown_pack.png')));
+      drawers.push(CnvsUtil.drawCardText(ctx, status, mcserver, customName));
 
-    Promise.all(drawers)
-    .then(() => {
-      resolve();
+      Promise.all(drawers)
+      .then(() => {
+        resolve();
+      })
+      .catch(e => reject(e));
     })
     .catch(e => reject(e));
   });
