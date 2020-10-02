@@ -1,5 +1,4 @@
 import Express from 'express';
-import Axios from 'axios';
 import Fs from 'fs';
 
 // import utility functions
