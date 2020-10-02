@@ -2,10 +2,10 @@ import Canvas from 'canvas';
 import Axios from 'axios';
 import Fs from 'fs';
 
-const Constants = JSON.parse(Fs.readFileSync('./src/config.json'));
-
 // utility stuff
 import * as CnvsUtil from './canvas.js';
+
+const Constants = JSON.parse(Fs.readFileSync('./src/config.json'));
 
 Canvas.registerFont('./src/assets/Minecraftia.ttf', {family: 'Minecraft', style: 'normal'});
 
