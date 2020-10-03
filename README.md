@@ -34,7 +34,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 * [Ratelimit: 3 requests / 20 seconds] (Applies to all endpoints under /reddit/)
 * `GET /reddit/gimme/:subreddits`
   * takes one parameter **in the url**
-    * `:subreddits` (required) the subreddits to fetch images from
+    * `subreddits` (required) the subreddits to fetch images from
   * Example 1: `GET betterapi.net/reddit/gimme/dankmemes`
   * Example 2: `GET betterapi.net/reddit/gimme/dankmemes+memes+me_irl+meme`
   * Returns a JSON response
