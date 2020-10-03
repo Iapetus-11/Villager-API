@@ -31,7 +31,6 @@ function limitHandler(req, res) { // handler for if rate limit is reached
 }
 
 function skipHandler(req, res) { // tell rate limiter whether to ignore that req or not
-  console.log(req.headers);
   return (process.env.BYPASS == req.get('Authorization'));
 }
 
