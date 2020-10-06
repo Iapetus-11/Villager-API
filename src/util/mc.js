@@ -32,7 +32,9 @@ export function status(mcserver, stop) {
             resolve(status(mcserver, true));
           } else {
             let data = Object.assign(resp.data, {cached: false, cacheTime: null}); // poggers code lmao
+
             resolve(data);
+
             if (!stop) {
               statusesCache[mcserver] = Object.assign(Object.assign({}, resp.data), {cached: true, cacheTime: (new Date())});
             }
