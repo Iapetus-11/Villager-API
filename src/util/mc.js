@@ -38,7 +38,11 @@ export function status(mcserver, stop) {
         })
         .catch(e => reject(e));
     } else {
-      resolve(cached);
+      if (stop) {
+        resolve(Object.assign(cached, {cached: false, cacheTime: null}));
+      } else {
+        resolve(cached);
+      }
     }
   });
 }
