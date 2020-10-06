@@ -4,7 +4,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 ## Routes / Endpoints
 ### **Minecraft Related Endpoints/Routes**
-* [Ratelimit: 3 requests / 30 seconds] (Applies to all endpoints under /mc/)
+* [Ratelimit: 2 requests / 5 seconds] (Applies to all endpoints under /mc/)
 * `GET /mc/mcstatus/:mcserver`
   * Takes one **url** parameter:
     * `mcserver` (required) which is the host/ip of the server
@@ -31,7 +31,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 <br>
 
 ### **Reddit Related Endpoints/Routes**
-* [Ratelimit: 3 requests / 20 seconds] (Applies to all endpoints under /reddit/)
+* [Ratelimit: 2 requests / 2.5 seconds] (Applies to all endpoints under /reddit/)
 * `GET /reddit/gimme/:subreddits`
   * takes one parameter **in the url**
     * `subreddits` (required) the subreddits to fetch images from
