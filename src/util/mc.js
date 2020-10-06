@@ -5,21 +5,45 @@ import Fs from 'fs';
 // utility stuff
 import * as CnvsUtil from './canvas.js';
 
-const Constants = JSON.parse(Fs.readFileSync('./src/config.json'));
+const mcData = JSON.parse(Fs.readFileSync('./src/mcdata.json'));
+var statusesCache = {}; // {'server': { data }}
 
 Canvas.registerFont('./src/assets/Minecraftia.ttf', {family: 'Minecraft', style: 'normal'});
 
+function clearCacheLoop() {
+  Object.keys(statusesCache)
+  .forEach((mcserver, index) => {
+    if ((new Date() - statusesCache[mcserver].cacheTime)/1000 >= 20) {
+      delete statusesCache[mcserver];
+    }
+  });
+}
+
+setInterval(clearCacheLoop, 5000);
+
 export function status(mcserver, stop) {
   return new Promise((resolve, reject) => {
-    Axios.get('http://localhost:2304/mcstatus', {data: {mcserver: mcserver}})
-    .then(resp => {
-      if (!resp.data.motd && !stop) {
-        resolve(status(mcserver, true));
-      } else {
-        resolve(resp.data);
-      }
-    })
-    .catch(e => reject(e));
+    let cached = statusesCache[mcserver];
+
+    if (!cached || (new Date() - cached.cacheTime)/1000 >= 20) {
+      Axios.get('http://localhost:2304/mcstatus', {data: {mcserver: mcserver}})
+        .then(resp => {
+          if (!resp.data.motd && !stop) {
+            resolve(status(mcserver, true));
+          } else {
+            let data = Object.assign(resp.data, {cached: false, cacheTime: null}); // poggers code lmao
+
+            resolve(data);
+
+            if (!stop) {
+              statusesCache[mcserver] = Object.assign(Object.assign({}, resp.data), {cached: true, cacheTime: (new Date())});
+            }
+          }
+        })
+        .catch(e => reject(e));
+    } else {
+      resolve(cached);
+    }
   });
 }
 
@@ -66,9 +90,9 @@ async function drawCardText(ctx, status, mcserver, customName) {
 
     for (let i = 0; i < motd.extra.length; i++) {
       if (motd.extra[i].color == void(0) || motd.extra[i].color == null) { // figure out color
-        ctx.fillStyle = '#'.concat(Constants.minecraftColors[lastColor][2]); // if color field doesn't exist
+        ctx.fillStyle = '#'.concat(mcData.minecraftColors[lastColor][2]); // if color field doesn't exist
       } else {
-        ctx.fillStyle = '#'.concat(Constants.minecraftColors[motd.extra[i].color.toLowerCase()][2]); // if it does exit set it to the color
+        ctx.fillStyle = '#'.concat(mcData.minecraftColors[motd.extra[i].color.toLowerCase()][2]); // if it does exit set it to the color
       }
 
       currentText = motd.extra[i].text; // set current text to draw to image
@@ -107,7 +131,7 @@ async function drawCardText(ctx, status, mcserver, customName) {
     for (let i = 0; i < motd.length; i++) { // loop which does something like .split() but it treats color codes as one character
       if (motd.charAt(i) == '§') {
         try {
-          currentColor = Constants.minecraftColorsCodes[motd.charAt(i+1).toLowerCase()][2];
+          currentColor = mcData.minecraftColorsCodes[motd.charAt(i+1).toLowerCase()][2];
           lastColor = currentColor;
         } catch(err) {
           currentColor = lastColor;
