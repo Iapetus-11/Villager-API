@@ -33,16 +33,14 @@ export function status(mcserver, stop) {
           } else {
             let data = Object.assign(resp.data, {cached: false, cacheTime: null}); // poggers code lmao
             resolve(data);
-            statusesCache[mcserver] = Object.assign(resp.data, {cached: true, cacheTime: (new Date())});
+            if (!stop) {
+              statusesCache[mcserver] = Object.assign(Object.assign({}, resp.data), {cached: true, cacheTime: (new Date())});
+            }
           }
         })
         .catch(e => reject(e));
     } else {
-      if (stop) {
-        resolve(Object.assign(cached, {cached: false, cacheTime: null}));
-      } else {
-        resolve(cached);
-      }
+      resolve(cached);
     }
   });
 }
