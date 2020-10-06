@@ -6,20 +6,40 @@ import Fs from 'fs';
 import * as CnvsUtil from './canvas.js';
 
 const mcData = JSON.parse(Fs.readFileSync('./src/mcdata.json'));
+var statusesCache = {}; // {'server': { data }}
 
 Canvas.registerFont('./src/assets/Minecraftia.ttf', {family: 'Minecraft', style: 'normal'});
 
+function clearCacheLoop() {
+  Object.keys(statusesCache)
+  .forEach((mcserver, index) => {
+    if ((new Date() - statusesCache[mcserver].cacheTime)/1000 >= 20) {
+      delete statusesCache[mcserver];
+    }
+  });
+}
+
+setInterval(clearCacheLoop, 5000);
+
 export function status(mcserver, stop) {
   return new Promise((resolve, reject) => {
-    Axios.get('http://localhost:2304/mcstatus', {data: {mcserver: mcserver}})
-    .then(resp => {
-      if (!resp.data.motd && !stop) {
-        resolve(status(mcserver, true));
-      } else {
-        resolve(resp.data);
-      }
-    })
-    .catch(e => reject(e));
+    let cached = statusesCache[mcserver];
+
+    if (!cached || (new Date() - cached.cacheTime)/1000 >= 20) {
+      Axios.get('http://localhost:2304/mcstatus', {data: {mcserver: mcserver}})
+        .then(resp => {
+          if (!resp.data.motd && !stop) {
+            resolve(status(mcserver, true));
+          } else {
+            let data = Object.assign(resp.data, {cached: false, cacheTime: null}); // poggers code lmao
+            resolve(data);
+            statusesCache[mcserver] = Object.assign(resp.data, {cached: true, cacheTime: (new Date())});
+          }
+        })
+        .catch(e => reject(e));
+    } else {
+      resolve(cached);
+    }
   });
 }
 
