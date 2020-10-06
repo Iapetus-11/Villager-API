@@ -4,7 +4,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 ## Routes / Endpoints
 ### **Minecraft Related Endpoints/Routes**
-* [Ratelimit: 2 requests / 5 seconds] (Applies to all endpoints under /mc/)
+* [Ratelimit: 2 requests / 2.5 seconds] (Applies to all endpoints under /mc/)
 * `GET /mc/mcstatus/:mcserver`
   * Takes one **url** parameter:
     * `mcserver` (required) which is the host/ip of the server

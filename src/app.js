@@ -43,7 +43,7 @@ const redditRateLimiter = RateLimit({
 });
 
 const mcRateLimiter = RateLimit({
-  windowMs: 5*1000,
+  windowMs: 2.5*1000,
   max: 2,
   keyGenerator: keyGenerator,
   skip: skipHandler,
