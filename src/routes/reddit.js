@@ -19,7 +19,11 @@ async function updateCache(subreddits, limit) {
   for (let i = 0; i < posts.length; i++) {
     let postData = posts[i].data;
 
-    if (!(postData.removal_reason || postData.is_video || postData.pinned || postData.stickied || postData.selftext)) {
+    if (postData.removal_reason || postData.is_video || postData.pinned || postData.stickied || postData.selftext) {
+      continue;
+    }
+
+    if (postData.url && (['.png', '.jpg', '.gif'].includes(postData.url.slice(-4)) || postData.url.slice(-5) == '.jpeg')) {
       imagesCache[subreddits].push({
         id: postData.id,
         subreddit: postData.subreddit,
