@@ -78,7 +78,7 @@ router.get('/serverfavicon/:mcserver', (req, res) => {
   .then(status => {
     MCUtil.genServerFavi(status)
     .then(image => {
-      CnvsUtil.sendImage(image, res, 'server-icon.png');
+      CnvsUtil.sendImage(image, res, 'favicon.png');
     })
     .catch(e => {
       console.log(e);
