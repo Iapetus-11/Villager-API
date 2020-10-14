@@ -232,10 +232,10 @@ export function genStatusCard(mcserver, customName, status) {
 export function genServerFavi(status) {
   return new Promise((resolve, reject) => {
     let image = Canvas.createCanvas(64, 64);
+    let ctx = image.getContext('2d');
 
-    Canvas.loadImage(status.favicon)
-    .then(faviData => {
-      image.getContext('2d').drawImage(faviData, 0, 0);
+    CnvsUtil.drawImageAsync(ctx, status.favicon, 0, 0, 64, 64)
+    .then(() => {
       resolve(image);
     })
     .catch(e => reject(e));
