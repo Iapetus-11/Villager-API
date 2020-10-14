@@ -233,7 +233,7 @@ export function genServerFavi(status) {
   return new Promise((resolve, reject) => {
     console.log('start of promise');
     let image = Canvas.createCanvas(64, 64);
-
+    console.log('loading image')
     Canvas.loadImage(status.favicon)
     .then(faviData => {
       console.log('drawing image');
