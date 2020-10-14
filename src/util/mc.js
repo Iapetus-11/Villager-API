@@ -146,6 +146,7 @@ async function drawCardText(ctx, status, mcserver, customName) {
           drawnPixelsVerti += 5+22;
           drawnPixels = 0;
         }
+
         ctx.fillStyle = '#'.concat(currentColor);
         ctx.fillText(motd.charAt(i), 146+drawnPixels, 98+drawnPixelsVerti);
         drawnPixels += ctx.measureText(motd.charAt(i)).width;
@@ -230,11 +231,14 @@ export function genStatusCard(mcserver, customName, status) {
 
 export function genServerFavi(status) {
   return new Promise((resolve, reject) => {
+    console.log('start of promise');
     let image = Canvas.createCanvas(64, 64);
 
     Canvas.loadImage(status.favicon)
     .then(faviData => {
+      console.log('drawing image');
       image.getContext('2d').drawImage(faviData);
+      console.log('resolving image');
       resolve(image);
     })
     .catch(e => reject(e));
