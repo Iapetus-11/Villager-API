@@ -235,7 +235,7 @@ export function genServerFavi(status) {
     let ctx = image.getContext('2d');
 
     console.log('drawimage async');
-    CnvsUtil.drawImageAsync(ctx, status.favicon, 0, 0, 64, 64)
+    CnvsUtil.drawImageAsync(ctx, (status.favicon ? status.favicon : './src/assets/unknown_pack.png'), 0, 0, 64, 64)
     .then(() => {
       console.log('resolving image');
       resolve(image);
