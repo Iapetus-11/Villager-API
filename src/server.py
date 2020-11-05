@@ -45,6 +45,8 @@ def ping_status(combined_server):  # all je servers support this
     s_dict['motd'] = status.description
     s_dict['favicon'] = status.favicon
 
+    print(f'Ping status: {s_dict["players_names"]}')
+
     return s_dict
 
 def query_status(combined_server):  # some je and most pocketmine servers support this
@@ -73,6 +75,8 @@ def query_status(combined_server):  # some je and most pocketmine servers suppor
     s_dict['motd'] = query.motd
     s_dict['map'] = query.map
     s_dict['plugins'] = query.software.plugins
+
+    print(f'Query status: {s_dict["players_names"]}')
 
     return s_dict
 
