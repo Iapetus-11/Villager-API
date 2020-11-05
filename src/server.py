@@ -194,6 +194,7 @@ async def unified_mcping(server_str, _port=None, _ver=None):
                     #         result
 
                     if result['online'] == True:
+                        print(tasks.index(task))
                         return result
 
             await asyncio.sleep(.01)
