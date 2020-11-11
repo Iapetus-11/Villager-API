@@ -55,9 +55,10 @@ const app = Express();
 app.use(Helmet());
 app.use('/reddit', redditRateLimiter, RedditRoutes);
 app.use('/mc', mcRateLimiter, MCRoutes);
-app.use((req, res) => {res.status(404).json({message: 'Endpoint not found or method not supported for this endpoint'})}); // handle 404s, must be last
 
 app.get('/', (req, res, next) => {res.status(200).json({hello: 'world'})});
+
+app.use((req, res) => {res.status(404).json({message: 'Endpoint not found or method not supported for this endpoint'})}); // handle 404s, must be last
 
 app.listen(process.env.PORT, function() {
   console.log(`Server running on port ${process.env.PORT}.`);
