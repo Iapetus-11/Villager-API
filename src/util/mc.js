@@ -251,7 +251,7 @@ export function genAchievement(text) {
 
     CnvsUtil.drawImageAsync(ctx, './src/assets/achievement.png', 0, 0, 320, 64)
     .then(() => {
-      CnvsUtil.drawTextAsync(ctx, text, 60, 42, 'Minecraft', '#FFF', 22, 308, 'left')
+      CnvsUtil.drawTextAsync(ctx, text, 60, 42, 'Minecraft', '#FFF', 16, 308, 'left')
       .then(() => {
         resolve(image);
       })
