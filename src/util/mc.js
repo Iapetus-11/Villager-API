@@ -249,7 +249,7 @@ export function genAchievement(text) {
 
     ctx.save();
 
-    CnvsUtil.drawTextAsync(text, 60, 42, 'Minecraft', '#FFF', 22, 308, 'left')
+    CnvsUtil.drawTextAsync(ctx, text, 60, 42, 'Minecraft', '#FFF', 22, 308, 'left')
     .then(() => {
       resolve(image);
     })
