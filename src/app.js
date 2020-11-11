@@ -53,10 +53,11 @@ const mcRateLimiter = RateLimit({
 const app = Express();
 
 app.use(Helmet());
-app.use('/', (req, res) => {res.status(200).json({hello: 'world'})});
 app.use('/reddit', redditRateLimiter, RedditRoutes);
 app.use('/mc', mcRateLimiter, MCRoutes);
-app.use((req, res) => {res.status(404).json({message: 'Endpoint/page not found'})}); // handle 404s, must be last
+app.use((req, res) => {res.status(404).json({message: 'Endpoint not found or method not supported for this endpoint'})}); // handle 404s, must be last
+
+app.get('/', (req, res, next) => {res.status(200).json({hello: 'world'})});
 
 app.listen(process.env.PORT, function() {
   console.log(`Server running on port ${process.env.PORT}.`);
