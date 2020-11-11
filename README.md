@@ -30,6 +30,14 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 <br>
 
+* `GET /mc/achievement/:text`
+  * takes on **url** parameter:
+    * `text` (required) which is the text which goes in the generated achievement
+  * Example: `GET https://api.iapetus11.xyz/mc/achievement/best%20api`
+  * Returns an image, returns JSON if an error occurs
+
+<br>
+
 ### **Reddit Related Endpoints/Routes**
 * [Ratelimit: 2 requests / 2.5 seconds] (Applies to all endpoints under /reddit/)
 * `GET /reddit/gimme/:subreddits`
