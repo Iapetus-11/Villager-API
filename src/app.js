@@ -51,8 +51,12 @@ const mcRateLimiter = RateLimit({
 });
 
 const app = Express();
-
 app.use(Helmet());
+
+app.use('/', function(req, res) {
+  res.status(200).json({hello: 'world'});
+});
+
 app.use('/reddit', redditRateLimiter, RedditRoutes);
 app.use('/mc', mcRateLimiter, MCRoutes);
 
