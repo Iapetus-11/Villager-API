@@ -249,9 +249,13 @@ export function genAchievement(text) {
 
     ctx.save();
 
-    CnvsUtil.drawTextAsync(ctx, text, 60, 42, 'Minecraft', '#FFF', 22, 308, 'left')
+    CnvsUtil.drawImageAsync(ctx, './src/assets/achievement.png', 0, 0, 320, 64)
     .then(() => {
-      resolve(image);
+      CnvsUtil.drawTextAsync(ctx, text, 60, 42, 'Minecraft', '#FFF', 22, 308, 'left')
+      .then(() => {
+        resolve(image);
+      })
+      .catch(e => reject(e));
     })
     .catch(e => reject(e));
   });
