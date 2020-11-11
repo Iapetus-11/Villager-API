@@ -91,4 +91,17 @@ router.get('/serverfavicon/:mcserver', (req, res) => {
   });
 });
 
+router.get('/achievement/:text', (req, res) => {
+  let text = req.params.text;
+
+  MCUtil.genAchievement(text)
+  .then(image => {
+    CnvsUtil.sendImage(image, res, 'achievement.png');
+  })
+  .catch(e => {
+    console.log(e);
+    res.status(500).json({success: false, message: 'Oops... Something went wrong on our end'});
+  })
+});
+
 export default router;
