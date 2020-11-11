@@ -251,6 +251,7 @@ export function genAchievement(text) {
     ctx.imageSmoothingEnabled = false;
     ctx.quality = 'nearest';
     ctx.patternQuality = 'nearest';
+    ctx.textDrawingMode = 'glyph';
 
     ctx.save();
 
