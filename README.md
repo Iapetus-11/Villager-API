@@ -8,7 +8,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 * `GET /mc/mcstatus/:mcserver`
   * Takes one **url** parameter:
     * `mcserver` (required) which is the host/ip of the server
-  * Example: `GET https://api.iapetus11.xyz/serverfavi/hypixel.net:25565`
+  * Example: `GET https://api.iapetus11.xyz/mc/serverfavi/hypixel.net:25565`
   * Returns a JSON response
 
 <br>
@@ -17,7 +17,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
   * takes one **url** and one [optional] **query** parameter:
     * `mcserver` (required, url parameter) which is the host/ip of the server
     * `customname` (optional, query parameter) text which will be shown instead of the server ip in the generated image
-  * Example: `GET https://api.iapetus11.xyz/servercard/hypixel.net:25565?customname=BruhCraftHD`
+  * Example: `GET https://api.iapetus11.xyz/mc/servercard/hypixel.net:25565?customname=BruhCraftHD`
   * Returns an image, returns JSON if an error occurs
 
 <br>
@@ -25,7 +25,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 * `GET /mc/serverfavi/:mcserver`
   * takes one **url** parameter:
     * `mcserver` (required) which is the host/ip of the server
-  * Example: `GET https://api.iapetus11.xyz/serverfavi/hypixel.net:25565`
+  * Example: `GET https://api.iapetus11.xyz/mc/serverfavi/hypixel.net:25565`
   * Returns an image, returns JSON if an error occurs
 
 <br>
