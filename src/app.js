@@ -57,7 +57,7 @@ app.use('/reddit', redditRateLimiter, RedditRoutes);
 app.use('/mc', mcRateLimiter, MCRoutes);
 
 app.use(function(req, res, next) { // handle 404s, must be last
-  res.status(404).json({'message': 'Page not found'});
+  res.status(404).json({message: 'Endpoint/page not found'});
 });
 
 app.listen(process.env.PORT, function() {
