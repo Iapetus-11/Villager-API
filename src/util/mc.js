@@ -241,3 +241,18 @@ export function genServerFavi(status) {
     .catch(e => reject(e));
   });
 }
+
+export function genAchievement(text) {
+  return new Promise((resolve, reject) => {
+    let image = Canvas.createCanvas(320, 64);
+    let ctx = image.getContext('2d');
+
+    ctx.save();
+
+    CnvsUtil.drawTextAsync(text, 60, 42, 'Minecraft', '#FFF', 22, 308, 'left')
+    .then(() => {
+      resolve(image);
+    })
+    .catch(e => reject(e));
+  });
+}
