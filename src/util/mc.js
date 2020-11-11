@@ -247,6 +247,10 @@ export function genAchievement(text) {
     let image = Canvas.createCanvas(320, 64);
     let ctx = image.getContext('2d');
 
+    // We're dealing with inentionally pixely images so resizing should be nearest neighbor and smoothing should be off
+    ctx.imageSmoothingEnabled = false;
+    ctx.quality = 'nearest';
+
     ctx.save();
 
     CnvsUtil.drawImageAsync(ctx, './src/assets/achievement.png', 0, 0, 320, 64)
