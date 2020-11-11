@@ -56,6 +56,10 @@ app.use(Helmet());
 app.use('/reddit', redditRateLimiter, RedditRoutes);
 app.use('/mc', mcRateLimiter, MCRoutes);
 
+app.use(function(req, res, next) { // handle 404s, must be last
+  res.status(404).json({'message': 'Page not found'});
+});
+
 app.listen(process.env.PORT, function() {
   console.log(`Server running on port ${process.env.PORT}.`);
 });
