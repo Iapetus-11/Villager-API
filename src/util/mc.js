@@ -250,6 +250,7 @@ export function genAchievement(text) {
     // We're dealing with inentionally pixely images so resizing should be nearest neighbor and smoothing should be off
     ctx.imageSmoothingEnabled = false;
     ctx.quality = 'nearest';
+    ctx.patternQuality = 'nearest';
 
     ctx.save();
 
