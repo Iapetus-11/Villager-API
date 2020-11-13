@@ -60,7 +60,7 @@ app.get('/', (req, res, next) => {
   res.status(200).json({
     'Hello There!': 'GENERALLLL KENOBIIIIIIIII',
     'discord': 'https://discord.gg/VtE3rtV',
-    'endpoints': app.routes
+    'endpoints': app.routes.toString()
   });
 });
 
