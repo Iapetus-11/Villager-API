@@ -58,9 +58,8 @@ app.use('/mc', mcRateLimiter, MCRoutes);
 
 app.get('/', (req, res, next) => {
   res.status(200).json({
-    'Hello There!': 'GENERALLLL KENOBIIIIIIIII',
-    'discord': 'https://discord.gg/VtE3rtV',
-    'endpoints': app._router.stack
+    'Hello There!': 'GENERAL KENOBIIIIIIIII',
+    'documentation': 'https://github.com/Villager-Dev/Villager-API'
   });
 });
 
