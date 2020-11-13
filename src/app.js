@@ -56,7 +56,13 @@ app.use(Helmet());
 app.use('/reddit', redditRateLimiter, RedditRoutes);
 app.use('/mc', mcRateLimiter, MCRoutes);
 
-app.get('/', (req, res, next) => {res.status(200).json({hello: 'world'})});
+app.get('/', (req, res, next) => {
+  res.status(200).json({
+    'Hello There!': 'GENERALLLL KENOBIIIIIIIII',
+    'discord': 'https://discord.gg/VtE3rtV',
+    'endpoints': app.routes
+  });
+});
 
 app.use((req, res) => {res.status(404).json({message: 'Endpoint not found or method not supported for this endpoint'})}); // handle 404s, must be last
 
