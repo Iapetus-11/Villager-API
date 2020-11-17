@@ -85,7 +85,6 @@ async function drawCardText(ctx, status, mcserver, customName) {
     let drawnPixelsVerti = 0;
     let lastColor = 'white';
     let currentText = '';
-    let thisLine = '';
 
     motd.extra.push(motd.text);
 
@@ -105,16 +104,7 @@ async function drawCardText(ctx, status, mcserver, customName) {
       if (currentText.indexOf('\n') != -1) { // keep track of space taken up by text already drawn
         drawnPixelsVerti += 5+22;
         drawnPixels = 0;
-
-        if (thisLine.length > 71) {
-          thisLine = '';
-          currentText = currentText.concat('\n');
-        }
-      } else {
-        thisLine = '';
       }
-
-      thisLine = thisLine.concat(currentText);
 
       ctx.fillText(currentText, 146+drawnPixels, 98+drawnPixelsVerti);
       drawnPixels += ctx.measureText(currentText).width;
