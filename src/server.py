@@ -190,6 +190,17 @@ async def unified_mcping(server_str, _port=None, _ver=None):
                     #         result
 
                     if result['online'] == True:
+                        if tasks.index(task) == 1:
+                            try:
+                                await asyncio.wait_for(tasks[0], 1)
+
+                                ping_result = tasks[0].result()
+
+                                if ping_result['online'] == True:
+                                    return ping_result
+                            except asyncio.TimeoutError:
+                                pass
+
                         return result
 
             await asyncio.sleep(.01)
