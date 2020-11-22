@@ -8,7 +8,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 * `GET /mc/mcstatus/:mcserver`
   * Takes one **url** parameter:
     * `mcserver` (required) which is the host/ip of the server
-  * Example: `GET https://api.iapetus11.xyz/mc/serverfavi/hypixel.net:25565`
+  * Example: `GET https://api.iapetus11.xyz/mc/mcstatus/hypixel.net:25565`
   * Returns a JSON response
 
 <br>
