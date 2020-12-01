@@ -34,7 +34,10 @@ def ping_status(combined_server, did_resolve=False):  # all je servers support t
                     d_ans = dns.resolver.query(f'_minecraft._tcp.{combined_server.split(":")[0]}', 'SRV')[0]
                     return ping_status(f'{d_ans.target.to_text().strip(".")}:{d_ans.port}', True)
                 except Exception as e:
+                    print(e)
                     break
+
+    print(combined_server, did_resolve)
 
     try:
         status = mcstatus.lookup(combined_server).status()
