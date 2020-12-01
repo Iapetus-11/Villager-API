@@ -27,6 +27,14 @@ default = {
 abcd = 'abcdefghijklmnopqrstuvwxyz'
 
 def ping_status(combined_server):  # all je servers support this
+    for c in combined_server.split(':')[0]:
+        if c in abcd:
+            try:
+                d_ans = dns.resolver.query(f'_minecraft._tcp.{combined_server.split(":")[0]}', 'SRV')[0]
+                return ping_status(d_ans.target.to_text().strip('.') + str(d_ans.port))
+            except Exception as e:
+                break
+
     try:
         status = mcstatus.lookup(combined_server).status()
     except Exception:
@@ -155,14 +163,6 @@ async def cleanup_args(server_str, _port=None):
 
 async def unified_mcping(server_str, _port=None, _ver=None):
     ip, port, str_port = await cleanup_args(server_str, _port) # cleanup input
-
-    for c in ip:
-        if c in abcd:
-            try:
-                d_ans = dns.resolver.query(f'_minecraft._tcp.{ip}', 'SRV')[0]
-                await unified_mcping(d_ans.target.to_text().strip('.'), d_ans.port)
-            except Exception as e:
-                break
 
     if _ver == 'status':
         ping_status_partial = partial(ping_status, f'{ip}{str_port}')
