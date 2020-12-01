@@ -7,6 +7,7 @@ import socket
 from pyraklib.protocol.UNCONNECTED_PING import UNCONNECTED_PING
 from pyraklib.protocol.UNCONNECTED_PONG import UNCONNECTED_PONG
 from mcstatus import MinecraftServer as mcstatus
+import dns.resolver
 
 # default / offline server
 default = {
@@ -22,6 +23,8 @@ default = {
     'plugins': [], # List['plugin', 'plugin']
     'gamemode': None # string
 }
+
+abcd = 'abcdefghijklmnopqrstuvwxyz'
 
 def ping_status(combined_server):  # all je servers support this
     try:
@@ -153,6 +156,14 @@ async def cleanup_args(server_str, _port=None):
 async def unified_mcping(server_str, _port=None, _ver=None):
     ip, port, str_port = await cleanup_args(server_str, _port) # cleanup input
 
+    for c in ip:
+        if c in abcd:
+            try:
+                d_ans = dns.resolver.query(f'_minecraft._tcp.{ip}', 'SRV')[0]
+                await unified_mcping(d_ans.target.to_text().strip('.'), d_ans.port)
+            except Exception as e:
+                break
+
     if _ver == 'status':
         ping_status_partial = partial(ping_status, f'{ip}{str_port}')
         with concurrent.futures.ThreadPoolExecutor() as pool:
@@ -211,7 +222,7 @@ async def validate(host):
     if '..' in host: return False
 
     for char in host:
-        if char not in 'abcdefghijklmnopqrstuvwxyz1234567890./:':
+        if char not in (abcd + '1234567890./:'):
             return False
 
     if len(host) < 4: return False
