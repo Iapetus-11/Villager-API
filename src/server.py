@@ -31,8 +31,9 @@ def ping_status(combined_server):  # all je servers support this
         if c in abcd:
             try:
                 d_ans = dns.resolver.query(f'_minecraft._tcp.{combined_server.split(":")[0]}', 'SRV')[0]
-                return ping_status(d_ans.target.to_text().strip('.') + str(d_ans.port))
+                return ping_status(f'{d_ans.target.to_text().strip(".")}:{d_ans.port}')
             except Exception as e:
+                print(e)
                 break
 
     try:
