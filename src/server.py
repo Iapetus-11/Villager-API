@@ -160,8 +160,7 @@ async def unified_mcping(server_str, _port=None, _ver=None, *, do_resolve=False)
         for c in ip:
             if c in abcd:
                 try:
-                    resolve_task = asyncio.create_task(dns.asyncresolver.resolve(f'_minecraft._tcp.{ip}', 'SRV', search=True))
-                    d_ans = await asyncio.wait_for(resolve_task, .5)
+                    d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{ip}', 'SRV', search=True), .5)
                     return await unified_mcping(f'{d_ans[0].target.to_text().strip(".")}:{d_ans[0].port}')
                 except Exception as e:
                     break
