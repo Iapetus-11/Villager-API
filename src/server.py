@@ -26,19 +26,7 @@ default = {
 
 abcd = 'abcdefghijklmnopqrstuvwxyz'
 
-def ping_status(combined_server, did_resolve=False):  # all je servers support this
-    if not did_resolve:
-        for c in combined_server.split(':')[0]:
-            if c in abcd:
-                try:
-                    d_ans = dns.resolver.query(f'_minecraft._tcp.{combined_server.split(":")[0]}', 'SRV')[0]
-                    return ping_status(f'{d_ans.target.to_text().strip(".")}:{d_ans.port}', True)
-                except Exception as e:
-                    print(e)
-                    break
-
-    print(combined_server, did_resolve)
-
+def ping_status(combined_server):  # all je servers support this
     try:
         status = mcstatus.lookup(combined_server).status()
     except Exception:
@@ -165,8 +153,18 @@ async def cleanup_args(server_str, _port=None):
 
     return ip, port, str_port
 
-async def unified_mcping(server_str, _port=None, _ver=None):
+async def unified_mcping(server_str, _port=None, _ver=None, *, do_resolve=False):
     ip, port, str_port = await cleanup_args(server_str, _port) # cleanup input
+
+    if do_resolve:
+        for c in ip:
+            if c in abcd:
+                try:
+                    d_ans = dns.resolver.query(f'_minecraft._tcp.{ip}', 'SRV')[0]
+                    return unified_mcping(f'{d_ans.target.to_text().strip(".")}:{d_ans.port}')
+                except Exception as e:
+                    print(e)
+                    break
 
     if _ver == 'status':
         ping_status_partial = partial(ping_status, f'{ip}{str_port}')
@@ -247,7 +245,7 @@ async def handler(r):
     if not await validate(mcserver):
         return web.json_response(default)
 
-    status = await unified_mcping(mcserver)
+    status = await unified_mcping(mcserver, do_resolve=True)
     return web.json_response(status)
 
 web_app = web.Application()
