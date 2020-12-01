@@ -26,17 +26,15 @@ default = {
 
 abcd = 'abcdefghijklmnopqrstuvwxyz'
 
-def ping_status(combined_server):  # all je servers support this
-    for c in combined_server.split(':')[0]:
-        if c in abcd:
-            try:
-                d_ans = dns.resolver.query(f'_minecraft._tcp.{combined_server.split(":")[0]}', 'SRV')[0]
-                return ping_status(f'{d_ans.target.to_text().strip(".")}:{d_ans.port}')
-            except Exception as e:
-                print(e)
-                break
-
-    print(combined_server)
+def ping_status(combined_server, did_resolve=False):  # all je servers support this
+    if not did_resolve:
+        for c in combined_server.split(':')[0]:
+            if c in abcd:
+                try:
+                    d_ans = dns.resolver.query(f'_minecraft._tcp.{combined_server.split(":")[0]}', 'SRV')[0]
+                    return ping_status(f'{d_ans.target.to_text().strip(".")}:{d_ans.port}', True)
+                except Exception as e:
+                    break
 
     try:
         status = mcstatus.lookup(combined_server).status()
