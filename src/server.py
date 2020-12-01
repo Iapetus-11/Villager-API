@@ -36,6 +36,8 @@ def ping_status(combined_server):  # all je servers support this
                 print(e)
                 break
 
+    print(combined_server)
+
     try:
         status = mcstatus.lookup(combined_server).status()
     except Exception:
