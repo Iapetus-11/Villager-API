@@ -1,3 +1,4 @@
 aiohttp
 mcstatus
 pyraklib
+dnspython
