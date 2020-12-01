@@ -161,7 +161,7 @@ async def unified_mcping(server_str, _port=None, _ver=None, *, do_resolve=False)
             if c in abcd:
                 try:
                     d_ans = dns.resolver.query(f'_minecraft._tcp.{ip}', 'SRV')[0]
-                    return unified_mcping(f'{d_ans.target.to_text().strip(".")}:{d_ans.port}')
+                    return await unified_mcping(f'{d_ans.target.to_text().strip(".")}:{d_ans.port}')
                 except Exception as e:
                     print(e)
                     break
