@@ -269,7 +269,7 @@ export function genAchievement(text) {
 
 export function genSplashScreen(text) {
   return new Promise((resolve, reject) => {
-    let image = Canvas.createCanvas(1920, 1018);
+    let image = Canvas.createCanvas(512, 271);
     let ctx = image.getContext('2d');
 
     ctx.imageSmoothingEnabled = false;
@@ -279,10 +279,10 @@ export function genSplashScreen(text) {
 
     ctx.save();
 
-    CnvsUtil.drawImageAsync(ctx, './src/assets/mcsplash.png', 0, 0, 1920, 1018)
+    CnvsUtil.drawImageAsync(ctx, './src/assets/mcsplash.png', 0, 0, 512, 271)
     .then(() => {
       //ctx.rotate(-45 * Math.PI / 180);
-      CnvsUtil.drawTextAsync(ctx, text, 1345, 300, 'Minecraft', '#FFFF55', 20, 400, 'center')
+      CnvsUtil.drawTextAsync(ctx, text, 370, 69, 'Minecraft', '#FFFF55', 20, 400, 'center')
       .then(() => {
         resolve(image);
       })
