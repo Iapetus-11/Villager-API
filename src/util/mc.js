@@ -282,7 +282,7 @@ export function genSplashScreen(text) {
     CnvsUtil.drawImageAsync(ctx, './src/assets/mcsplash.png', 0, 0, 512, 271)
     .then(() => {
       ctx.rotate(-0.45);
-      CnvsUtil.drawTextAsync(ctx, text, 370-50, 69+175, 'Minecraft', '#FFFF55', 12, 400, 'center')
+      CnvsUtil.drawTextAsync(ctx, text, 370-75, 69+165, 'Minecraft', '#FFFF55', 12, 400, 'center')
       .then(() => {
         resolve(image);
       })
