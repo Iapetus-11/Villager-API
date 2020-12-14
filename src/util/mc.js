@@ -268,7 +268,7 @@ export function genAchievement(text) {
 }
 
 export function genSplashScreen(text) {
-  return new Promise((resole, reject) => {
+  return new Promise((resolve, reject) => {
     let image = Canvas.createCanvas(1920, 1018);
     let ctx = image.getContext('2d');
 
