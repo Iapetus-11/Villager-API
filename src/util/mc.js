@@ -266,3 +266,28 @@ export function genAchievement(text) {
     .catch(e => reject(e));
   });
 }
+
+export function genSplashScreen(text) {
+  return new Promise((resole, reject) => {
+    let image = Canvas.createCanvas(1920, 1018);
+    let ctx = image.getContext('2d');
+
+    ctx.imageSmoothingEnabled = false;
+    ctx.quality = 'nearest';
+    ctx.patternQuality = 'nearest';
+    ctx.textDrawingMode = 'glyph';
+
+    ctx.save();
+
+    CnvsUtil.drawImageAsync(ctx, './src/assets/mcsplash.png', 0, 0, 1920, 1018)
+    .then(() => {
+      ctx.rotate(-45 * Math.PI / 180);
+      CnvsUtil.drawTextAsync(ctx, text, 1345, 300, 'Minecraft', '#FFAA00', 15, 400, 'center')
+      .then(() => {
+        resolve(image);
+      })
+      .catch(e => reject(e));
+    })
+    .catch(e => reject(e));
+  });
+}
