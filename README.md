@@ -40,7 +40,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 * `GET /mc/splashscreen/:text`
   * takes on **url** parameter:
-    * `text` (required) which is the text which goes in the generated achievement (Must not be over 200 characters)
+    * `text` (required) which is the text which goes in the generated achievement (Must not be over 30 characters)
   * Example: `GET https://api.iapetus11.me/mc/splashscreen/villager%20bot%20best%20bot`
   * Returns an image, returns JSON if an error occurs
 

@@ -112,8 +112,8 @@ router.get('/achievement/:text', (req, res) => {
 router.get('/splashscreen/:text', (req, res) => {
   let text = req.params.text;
 
-  if (text.length > 200) {
-    res.status(400).json({success: false, message: 'The text parameter must not be longer than 200 characters'});
+  if (text.length > 30) {
+    res.status(400).json({success: false, message: 'The text parameter must not be longer than 30 characters'});
     return;
   }
 
