@@ -284,7 +284,7 @@ export function genSplashScreen(text) {
       ctx.rotate(-0.45);
       ctx.save();
 
-      CnvsUtil.drawText(ctx, text, 370-73, 69+153, 'Minecraft', '#FFAA00', 12, 400, 'center');
+      CnvsUtil.drawText(ctx, text, 370-74, 69+151, 'Minecraft', '#FFAA00', 12, 400, 'center');
       CnvsUtil.drawText(ctx, text, 370-75, 69+150, 'Minecraft', '#FFFF55', 12, 400, 'center');
 
       resolve(image);
