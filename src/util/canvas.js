@@ -37,6 +37,24 @@ export function drawTextAsync(ctx, text, x, y, fontName, color, defaultSize, max
   });
 }
 
+export function drawText(ctx, text, x, y, fontName, color, defaultSize, maxWidth, alignment) {
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = color;
+  ctx.textAlign = alignment;
+
+  ctx.font = `${defaultSize}px "${fontName}"`;
+
+  // ensmallen the text till it fits lmao
+  while (ctx.measureText(text).width > maxWidth) {
+    defaultSize -= .1;
+    ctx.font = `${defaultSize}px "${fontName}"`;
+  }
+
+  ctx.fillText(text, x, y);
+
+  ctx.restore();
+}
+
 // draw an image lol
 export function drawImageAsync(ctx, src, x, y, width, height) {
   return new Promise((resolve, reject) => {
