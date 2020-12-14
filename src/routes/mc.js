@@ -101,7 +101,7 @@ router.get('/achievement/:text', (req, res) => {
   .catch(e => {
     console.log(e);
     res.status(500).json({success: false, message: 'Oops... Something went wrong on our end'});
-  })
+  });
 });
 
 export default router;
