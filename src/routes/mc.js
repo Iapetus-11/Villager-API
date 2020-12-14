@@ -104,4 +104,22 @@ router.get('/achievement/:text', (req, res) => {
   });
 });
 
+router.get('/splashscreen/:text', (req, res) => {
+  let text = req.params.text;
+
+  if (text.length > 200) {
+    res.status(400).json({success: false, message: 'The text parameter must not be longer than 200 characters'});
+    return;
+  }
+
+  MCUtil.genSplashScreen(text)
+  .then(image => {
+    CnvsUtil.sendImage(image, res, 'splash.png');
+  })
+  .catch(e => {
+    console.log(e);
+    res.status(500).json({success: false, message: 'Oops... Something went wrong on our end'});
+  });
+});
+
 export default router;
