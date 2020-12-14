@@ -94,6 +94,11 @@ router.get('/serverfavicon/:mcserver', (req, res) => {
 router.get('/achievement/:text', (req, res) => {
   let text = req.params.text;
 
+  if (text.length > 30) {
+    res.status(400).json({success: false, message: 'The text parameter must not be longer than 30 characters'});
+    return;
+  }
+
   MCUtil.genAchievement(text)
   .then(image => {
     CnvsUtil.sendImage(image, res, 'achievement.png');
