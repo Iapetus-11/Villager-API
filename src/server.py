@@ -152,6 +152,10 @@ async def handler(r):
 
     jj = await r.json()
 
+    mcserver = jj.get('mcserver')
+    if mcserver is None:
+        return web.Response(status=400) # 400 bad request
+
     if not validate(mcserver):
         return web.json_response(default)
 
