@@ -2,7 +2,7 @@ from time import perf_counter
 from aiohttp import web
 import asyncio
 import concurrent.futures
-from functools import partial
+import functools
 import dns.asyncresolver
 import struct
 from mcstatus import MinecraftServer
@@ -48,34 +48,34 @@ async def ping_status(host, port):  # all je servers support this
 
     return s_dict
 
-def query_status(combined_server):  # some je and most pocketmine servers support this
-    time_before = time()
-
-    try:
-        query = mcstatus.lookup(combined_server).query()
-    except Exception:
-        return default
-
-    latency = round((time() - time_before) * 1000, 2)
-
-    s_dict = default.copy()
-
-    s_dict['online'] = True
-    s_dict['players_online'] = query.players.online
-    s_dict['players_max'] = query.players.max
-    s_dict['players_names'] = query.players.names
-    s_dict['latency'] = latency
-    s_dict['version'] = {
-        'brand': None,
-        'software': query.software.version, # string
-        'protocol': 'query',
-        'method': 'query'
-    }
-    s_dict['motd'] = query.motd
-    s_dict['map'] = query.map
-    s_dict['plugins'] = query.software.plugins
-
-    return s_dict
+# def query_status(combined_server):  # some je and most pocketmine servers support this
+#     time_before = time()
+#
+#     try:
+#         query = mcstatus.lookup(combined_server).query()
+#     except Exception:
+#         return default
+#
+#     latency = round((time() - time_before) * 1000, 2)
+#
+#     s_dict = default.copy()
+#
+#     s_dict['online'] = True
+#     s_dict['players_online'] = query.players.online
+#     s_dict['players_max'] = query.players.max
+#     s_dict['players_names'] = query.players.names
+#     s_dict['latency'] = latency
+#     s_dict['version'] = {
+#         'brand': None,
+#         'software': query.software.version, # string
+#         'protocol': 'query',
+#         'method': 'query'
+#     }
+#     s_dict['motd'] = query.motd
+#     s_dict['map'] = query.map
+#     s_dict['plugins'] = query.software.plugins
+#
+#     return s_dict
 
 async def raknet_status(host, port): # Should work on all BE servers
     if port is None:
@@ -140,22 +140,42 @@ async def cleanup_args(server_str, _port=None):
 
     return ip, port, str_port
 
+async def mcstatus(host, port, *, do_resolve=False):
+    if do_resolve:
+        for c in ip:
+            if c in abcd:
+                try:
+                    d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True), 1)
+                    return await unified_mcping(d_ans[0].target.to_text().strip("."), d_ans[0].port)
+                except Exception as e:
+                    break
+
+
+    statuses = [
+        ping_status(host, port),
+        raknet_status(host, port)
+    ]
+
+    try:
+        for status in asyncio.as_completed(statuses, timeout=2):
+            return status
+    except Exception:
+        return default
+
 async def unified_mcping(server_str, _port=None, _ver=None, *, do_resolve=False):
-    ip, port, str_port = await cleanup_args(server_str, _port) # cleanup input
+    host, port, str_port = await cleanup_args(server_str, _port) # cleanup input
 
     if do_resolve:
         for c in ip:
             if c in abcd:
                 try:
-                    d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{ip}', 'SRV', search=True), 1)
+                    d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True), 1)
                     return await unified_mcping(f'{d_ans[0].target.to_text().strip(".")}:{d_ans[0].port}')
                 except Exception as e:
                     break
 
     if _ver == 'status':
-        ping_status_partial = partial(ping_status, f'{ip}{str_port}')
-        with concurrent.futures.ThreadPoolExecutor() as pool:
-            return await loop.run_in_executor(pool, ping_status_partial)
+        return await ping_status(host, port)
     elif _ver == 'query':
         query_status_partial = partial(query_status, f'{ip}{str_port}')
         with concurrent.futures.ThreadPoolExecutor() as pool:
