@@ -26,7 +26,7 @@ abcd = 'abcdefghijklmnopqrstuvwxyz'
 
 async def ping_status(host, port):  # all je servers support this
     try:
-        status = await asyncio.wait_for(MinecraftServer(host, port).async_status(tries=2), 2)
+        status = await MinecraftServer(host, port).async_status(tries=2)
     except Exception:
         return default
 
@@ -84,12 +84,12 @@ async def raknet_status(host, port): # Should work on all BE servers
     start = perf_counter()
 
     try:
-        stream = await asyncio.wait_for(asyncio_dgram.connect((host, port)), 1)
+        stream = await asyncio_dgram.connect((host, port))
 
         data = b'\x01' + struct.pack('>q', 0) + bytearray.fromhex('00 ff ff 00 fe fe fe fe fd fd fd fd 12 34 56 78')
 
-        await asyncio.wait_for(stream.send(data), 1)
-        data, _ = await asyncio.wait_for(stream.recv(), 1)
+        await stream.send(data)
+        data, _ = await stream.recv()
     except Exception:
         return default
 
