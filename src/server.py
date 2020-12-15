@@ -108,6 +108,7 @@ async def mcstatus(host, port, *, do_resolve=False):
     try:
         for status in asyncio.as_completed(statuses, timeout=2):
             print(status)
+            await asyncio.sleep(1)
             return status
     except Exception:
         return default
