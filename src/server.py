@@ -50,8 +50,6 @@ async def raknet_status(host, port): # Should work on all BE servers
     if port is None:
         port = 19132
 
-    print(host, port)
-
     start = perf_counter()
 
     try:
@@ -61,7 +59,8 @@ async def raknet_status(host, port): # Should work on all BE servers
 
         await stream.send(data)
         data, _ = await stream.recv()
-    except Exception:
+    except Exception as e:
+        print(e)
         return default
 
     latency = round((perf_counter() - start), 2)
@@ -89,6 +88,8 @@ async def raknet_status(host, port): # Should work on all BE servers
         s_dict['gamemode'] = data[8]
     except IndexError:
         pass
+
+    print(s_dict)
 
     return s_dict
 
