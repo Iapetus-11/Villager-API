@@ -1,13 +1,11 @@
-from time import sleep, time
+from time import perf_counter
 from aiohttp import web
 import asyncio
 import concurrent.futures
 from functools import partial
-import socket
-from pyraklib.protocol.UNCONNECTED_PING import UNCONNECTED_PING
-from pyraklib.protocol.UNCONNECTED_PONG import UNCONNECTED_PONG
-from mcstatus import MinecraftServer as mcstatus
 import dns.asyncresolver
+import struct
+from mcstatus import MinecraftServer
 
 # default / offline server
 default = {
@@ -26,9 +24,9 @@ default = {
 
 abcd = 'abcdefghijklmnopqrstuvwxyz'
 
-def ping_status(combined_server):  # all je servers support this
+async def ping_status(host, port):  # all je servers support this
     try:
-        status = mcstatus.lookup(combined_server).status()
+        status = await asyncio.wait_for(MinecraftServer(host, port).async_status(tries=2), 2)
     except Exception:
         return default
 
@@ -79,38 +77,27 @@ def query_status(combined_server):  # some je and most pocketmine servers suppor
 
     return s_dict
 
-def raknet_status(ip, port):  # basically create a mini/shitty raknet client to check the status of BE servers
+async def raknet_status(host, port): # Should work on all BE servers
     if port is None:
         port = 19132
 
-    ping = UNCONNECTED_PING()
-    ping.pingID = 4201
-    ping.encode()
+    start = perf_counter()
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    #s.setblocking(0) # non blocking
-    s.settimeout(2) # 2 seconds
-
-    time_before = time()
     try:
-        s.sendto(ping.buffer, (socket.gethostbyname(ip), port))
-        recv_data = s.recvfrom(2048)
-    except BlockingIOError:
-        return default
-    except socket.gaierror:
-        return default
-    except socket.timeout:
+        stream = await asyncio.wait_for(asyncio_dgram.connect((host, port)), 1)
+
+        data = b'\x01' + struct.pack('>q', 0) + bytearray.fromhex('00 ff ff 00 fe fe fe fe fd fd fd fd 12 34 56 78')
+
+        await asyncio.wait_for(stream.send(data), 1)
+        data, _ = await asyncio.wait_for(stream.recv(), 1)
+    except Exception:
         return default
 
-    pong = UNCONNECTED_PONG()
-    pong.buffer = recv_data[0]
-    pong.decode()
+    latency = round((perf_counter() - start), 2)
 
-    latency = round((time() - time_before) * 1000, 2)
-
-    data = pong.serverName.decode('UTF-8').split(';')
-    # str(pong.serverName) => https://wiki.vg/Raknet_Protocol#Unconnected_Ping
-    # b'MCPE;Nether updateeeeeee!;407;1.16.1;1;20;12172066879061040769;Xenon BE 6.0;Survival;1;19132;19133;'
+    data = data[1:]
+    name_length = struct.unpack('>H', data[32:34])[0]
+    data = data[34:34+name_length].decode().split(';')
 
     s_dict = default.copy()
 
