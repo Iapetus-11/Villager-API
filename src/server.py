@@ -107,9 +107,14 @@ async def mcstatus(host, port, *, do_resolve=False):
 
     try:
         for status in asyncio.as_completed(statuses, timeout=2):
-            return await status
+            status = await status
+
+            if status['online']:
+                return status
     except Exception:
         return default
+
+    return status
 
 def cleanup(server):
     if ':' in server:
