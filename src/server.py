@@ -91,7 +91,7 @@ async def raknet_status(host, port): # Should work on all BE servers
 
     return s_dict
 
-async def mcstatus(host, port, *, do_resolve=False):
+async def mcstatus(host, port, do_resolve=False):
     if do_resolve:
         for c in host:
             if c in abcd:
@@ -165,7 +165,7 @@ async def handler(r):
     if not validate(mcserver):
         return web.json_response(default)
 
-    status = await mcstatus(*cleanup(mcserver), do_resolve=True)
+    status = await mcstatus(*cleanup(mcserver), True)
     return web.json_response(status)
 
 web_app = web.Application()
