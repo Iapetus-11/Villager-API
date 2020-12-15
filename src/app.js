@@ -1,16 +1,14 @@
-import RateLimit from 'express-rate-limit';
-import Express from 'express';
-import DotEnv from 'dotenv';
-import Helmet from 'helmet';
-import Fs from 'fs';
+import ratelimit from 'express-rate-limit';
+import express from 'express';
+import dotenv from 'dotenv';
+import helmet from 'helmet';
+import fs from 'fs';
 
-DotEnv.config(); // initialize dotenv
+dotenv.config(); // Add keys/private data to process.env
 
-// import routes
-import RedditRoutes from './routes/reddit.js';
-import MCRoutes from './routes/mc.js';
+// Import routes
 
-function keyGenerator(req) {
+function keyGenerator(req) { // Handles requests coming through cloudflare as the default keygen would mess up here
   let cfConnecting = req.get('CF-Connecting-IP');
 
   if (cfConnecting) {
@@ -20,51 +18,45 @@ function keyGenerator(req) {
   }
 }
 
-function limitHandler(req, res) { // handler for if rate limit is reached
+function limitHandler(req, res) { // Handler for if/when a rate limit is reached
   res.status(429).json({
     success: false,
     message: 'Too many requests! You have hit the rate limit.',
-    limit: req.rateLimit.limit,
-    current: req.rateLimit.current,
-    remaining: req.rateLimit.remaining
-  }).end();
+    limit: req.ratelimit.limit,
+    current: req.ratelimit.current,
+    remaining: req.ratelimit.remaining
+  })
 }
 
-function skipHandler(req, res) { // tell rate limiter whether to ignore that req or not
+function skipHandler(req, res) { // Tell rate limiter whether to ignore that req or not
   return (process.env.BYPASS == req.get('Authorization'));
 }
 
-const redditRateLimiter = RateLimit({
-  windowMs: 2.5*1000,
-  max: 2,
-  keyGenerator: keyGenerator,
-  skip: skipHandler,
-  handler: limitHandler
-});
+function makeRateLimit(limit, per) { // Function for easily adding a ratelimit, simply for ease of use
+  return ratelimit({
+    windowMs: per*1000,
+    max: limit,
+    keyGenerator: keyGenerator,
+    skip: skipHandler,
+    handler: limitHandler
+  });
+}
 
-const mcRateLimiter = RateLimit({
-  windowMs: 2.5*1000,
-  max: 2,
-  keyGenerator: keyGenerator,
-  skip: skipHandler,
-  handler: limitHandler
-});
+const app = express();
 
-const app = Express();
+app.use(helmet());
 
-app.use(Helmet());
-app.use('/reddit', redditRateLimiter, RedditRoutes);
-app.use('/mc', mcRateLimiter, MCRoutes);
-
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
   res.status(200).json({
     'Hello There!': 'GENERAL KENOBIIIIIIIII',
     'documentation': 'https://github.com/Villager-Dev/Villager-API'
   });
 });
 
-app.use((req, res) => {res.status(404).json({message: 'Endpoint not found or method not supported for this endpoint'})}); // handle 404s, must be last
+app.use((req, res) => { // Handle 404s, must be last to work
+  res.status(404).json({ message: 'Endpoint not found or method not supported for this endpoint' });
+});
 
-app.listen(process.env.PORT, function() {
+app.listen(process.env.PORT, () => { // Run the app
   console.log(`Server running on port ${process.env.PORT}.`);
 });
