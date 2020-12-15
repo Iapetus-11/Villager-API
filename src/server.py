@@ -162,62 +162,6 @@ async def mcstatus(host, port, *, do_resolve=False):
     except Exception:
         return default
 
-async def unified_mcping(server_str, _port=None, _ver=None, *, do_resolve=False):
-    host, port, str_port = await cleanup_args(server_str, _port) # cleanup input
-
-    if do_resolve:
-        for c in ip:
-            if c in abcd:
-                try:
-                    d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True), 1)
-                    return await unified_mcping(f'{d_ans[0].target.to_text().strip(".")}:{d_ans[0].port}')
-                except Exception as e:
-                    break
-
-    if _ver == 'status':
-        return await ping_status(host, port)
-    elif _ver == 'query':
-        query_status_partial = partial(query_status, f'{ip}{str_port}')
-        with concurrent.futures.ThreadPoolExecutor() as pool:
-            return await loop.run_in_executor(pool, query_status_partial)
-    elif _ver == 'raknet':
-        raknet_status_partial = partial(raknet_status, ip, port)
-        with concurrent.futures.ThreadPoolExecutor() as pool:
-            return await loop.run_in_executor(pool, raknet_status_partial)
-    else:
-        tasks = [
-            loop.create_task(unified_mcping(ip, port, 'status')),
-            loop.create_task(unified_mcping(ip, port, 'query')),
-            loop.create_task(unified_mcping(ip, port, 'raknet'))
-        ]
-
-        done = 0
-
-        while done <= 3:  # necessary to not wait forever on results
-            for task in tasks:
-                if task.done():
-                    done += 1
-
-                    result = task.result()
-
-                    if result['online'] == True:
-                        if tasks.index(task) == 1:
-                            try:
-                                await asyncio.wait_for(tasks[0], 1)
-
-                                ping_result = tasks[0].result()
-
-                                if ping_result['online'] == True:
-                                    return ping_result
-                            except asyncio.TimeoutError:
-                                pass
-
-                        return result
-
-            await asyncio.sleep(.01)
-
-        return default
-
 async def validate(host):
     if '..' in host: return False
 
