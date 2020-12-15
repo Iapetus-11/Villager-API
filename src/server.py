@@ -2,6 +2,7 @@ from mcstatus import MinecraftServer
 from time import perf_counter
 import dns.asyncresolver
 from aiohttp import web
+import asyncio_dgram
 import asyncio
 import struct
 
@@ -59,8 +60,7 @@ async def raknet_status(host, port): # Should work on all BE servers
 
         await stream.send(data)
         data, _ = await stream.recv()
-    except Exception as e:
-        print(e)
+    except Exception:
         return default
 
     latency = round((perf_counter() - start), 2)
@@ -88,8 +88,6 @@ async def raknet_status(host, port): # Should work on all BE servers
         s_dict['gamemode'] = data[8]
     except IndexError:
         pass
-
-    print(s_dict)
 
     return s_dict
 
