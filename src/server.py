@@ -1,8 +1,6 @@
 from time import perf_counter
 from aiohttp import web
 import asyncio
-import concurrent.futures
-import functools
 import dns.asyncresolver
 import struct
 from mcstatus import MinecraftServer
