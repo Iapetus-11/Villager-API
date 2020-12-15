@@ -1,9 +1,9 @@
+from mcstatus import MinecraftServer
 from time import perf_counter
+import dns.asyncresolver
 from aiohttp import web
 import asyncio
-import dns.asyncresolver
 import struct
-from mcstatus import MinecraftServer
 
 # default / offline server
 default = {
