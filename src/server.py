@@ -50,6 +50,8 @@ async def raknet_status(host, port): # Should work on all BE servers
     if port is None:
         port = 19132
 
+    print(host, port)
+
     start = perf_counter()
 
     try:
