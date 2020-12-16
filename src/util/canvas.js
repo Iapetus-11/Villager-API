@@ -1,6 +1,39 @@
-import Canvas from 'canvas';
+import canvas from 'canvas';
 
-// make a rectangular clip with round edges on the given ctx
+// Function for drawing an image easily onto the ctx
+export function drawImage(ctx, src, x, y, width, height) {
+  return new Promise((resolve, reject) => {
+    let image = new canvas.Image();
+
+    image.onload = function() {
+      ctx.drawImage(image, x, y, width, height);
+      resolve();
+    }
+
+    image.src = src;
+  });
+}
+
+// Function for drawing text that auto resizes easily
+export function drawText(ctx, text, x, y, fontName, color, defaultSize, maxWidth, alignment) {
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = color;
+  ctx.textAlign = alignment;
+
+  ctx.font = `${defaultSize}px "${fontName}"`;
+
+  // Ensmallen the text till it fits
+  while (ctx.measureText(text).width > maxWidth) {
+    defaultSize -= .1;
+    ctx.font = `${defaultSize}px "${fontName}"`;
+  }
+
+  ctx.fillText(text, x, y);
+
+  return ctx.measureText(text).width;
+}
+
+// Make a rectangular clip/border with round edges on the given ctx
 export function roundEdges(ctx, x, y, width, height, radius) { // def didn't steal this from code I did on disbots.gg hehe
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
@@ -16,65 +49,12 @@ export function roundEdges(ctx, x, y, width, height, radius) { // def didn't ste
   ctx.clip();
 }
 
-export function drawTextAsync(ctx, text, x, y, fontName, color, defaultSize, maxWidth, alignment) {
-  return new Promise((resolve, reject) => {
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = color;
-    ctx.textAlign = alignment;
-
-    ctx.font = `${defaultSize}px "${fontName}"`;
-
-    // ensmallen the text till it fits lmao
-    while (ctx.measureText(text).width > maxWidth) {
-      defaultSize -= .1;
-      ctx.font = `${defaultSize}px "${fontName}"`;
-    }
-
-    ctx.fillText(text, x, y);
-
-    ctx.restore();
-    resolve();
-  });
-}
-
-export function drawText(ctx, text, x, y, fontName, color, defaultSize, maxWidth, alignment) {
-  ctx.textBaseline = 'middle';
-  ctx.fillStyle = color;
-  ctx.textAlign = alignment;
-
-  ctx.font = `${defaultSize}px "${fontName}"`;
-
-  // ensmallen the text till it fits lmao
-  while (ctx.measureText(text).width > maxWidth) {
-    defaultSize -= .1;
-    ctx.font = `${defaultSize}px "${fontName}"`;
-  }
-
-  ctx.fillText(text, x, y);
-
-  ctx.restore();
-}
-
-// draw an image lol
-export function drawImageAsync(ctx, src, x, y, width, height) {
-  return new Promise((resolve, reject) => {
-    let image = new Canvas.Image();
-
-    image.onload = function() {
-      ctx.drawImage(image, x, y, width, height);
-      resolve();
-    }
-
-    image.src = src;
-  });
-}
-
-// function to send an image easily
+// Function to send an image easily
 export function sendImage(image, res, fileName) {
-  image.toBuffer((e, buffer) => { // this code will send the image straight from the buffer
+  image.toBuffer((e, buffer) => { // This will send the image straight from the buffer
     res.writeHead(200, {
       'Content-Type': 'image/png',
-      'Content-Disposition': `inline;filename=${fileName}`, // inlinen or attachment
+      'Content-Disposition': `inline;filename=${fileName}`, // Inline or attachment
       'Content-Length': buffer.length
     }).end(Buffer.from(buffer, 'binary'));
   });

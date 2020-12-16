@@ -4,12 +4,10 @@ import dns.asyncresolver
 from aiohttp import web
 import asyncio_dgram
 import asyncio
-import struct
 
 # default / offline server
 default = {
     'online': False, # boolean
-    'map': None, # string
     'players_online': 0, # int
     'players_max': 0, # int
     'players_names': [], # List['player', 'player']
@@ -17,7 +15,8 @@ default = {
     'version': {'brand': None, 'software': None, 'protocol': None}, # dict
     'motd': None, # string
     'favicon': None, # string / dataurl
-    'plugins': [], # List['plugin', 'plugin']
+    #'plugins': [], # List['plugin', 'plugin']
+    'map': None,
     'gamemode': None # string
 }
 
@@ -25,7 +24,7 @@ abcd = 'abcdefghijklmnopqrstuvwxyz'
 
 async def ping_status(host, port):  # all je servers support this
     try:
-        status = await MinecraftServer(host, port).async_status(tries=2)
+        status = await MinecraftServer(host, port).async_status(tries=1)
     except Exception:
         return default
 
@@ -56,10 +55,11 @@ async def raknet_status(host, port): # Should work on all BE servers
     try:
         stream = await asyncio_dgram.connect((host, port))
 
-        data = b'\x01' + struct.pack('>q', 0) + bytearray.fromhex('00 ff ff 00 fe fe fe fe fd fd fd fd 12 34 56 78')
-
-        await stream.send(data)
+        #data = b'\x01' + struct.pack('>q', 0) + bytearray.fromhex('00 ff ff 00 fe fe fe fe fd fd fd fd 12 34 56 78')
+        await stream.send(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x124Vx')
         data, _ = await stream.recv()
+
+        stream.close()
     except Exception:
         return default
 
@@ -91,14 +91,14 @@ async def raknet_status(host, port): # Should work on all BE servers
 
     return s_dict
 
-async def mcstatus(host, port, *, do_resolve=False):
+async def mcstatus(host, port, do_resolve=False):
     if do_resolve:
         for c in host:
             if c in abcd:
                 try:
-                    d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True), 1)
+                    d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True, tcp=True), 1)
                     return await mcstatus(d_ans[0].target.to_text().strip('.'), d_ans[0].port)
-                except Exception as e:
+                except Exception:
                     break
 
     statuses = [
@@ -165,7 +165,7 @@ async def handler(r):
     if not validate(mcserver):
         return web.json_response(default)
 
-    status = await mcstatus(*cleanup(mcserver), do_resolve=True)
+    status = await mcstatus(*cleanup(mcserver), True)
     return web.json_response(status)
 
 web_app = web.Application()
