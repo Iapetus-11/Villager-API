@@ -16,7 +16,7 @@ function clearSubredditCache() { // Clear outdated posts from the cache
 setInterval(clearSubredditCache, 1000); // Clear subreddit cache every second
 
 async function fetchRedditPosts(subreddits, limit) {
-  let res = await axios.get(`https://reddit.com/r/${subreddits}/hot/.json?limit=5`);
+  let res = await axios.get(`https://reddit.com/r/${subreddits}/hot/.json?limit=${limit}`);
   let posts = [];
 
   if (res.status != 200) {
@@ -24,6 +24,7 @@ async function fetchRedditPosts(subreddits, limit) {
   }
 
   res.data.data.children.forEach(p => {
+    p = p.data;
     if (!(p.removal_reason || p.is_video || p.pinned || p.stickied || p.selftext)) {
       if (p.url && ['.png', '.jpg', '.gif', 'jpeg'].includes(p.url.slice(-4))) {
         posts.push({
@@ -88,10 +89,10 @@ router.get('/gimme/:subreddits', async (req, res) => {
     let tempCache = {};
 
     (await fetchRedditPosts(subreddits, 175)).forEach(post => {
-      if (tempCache[subreddit]) {
-        tempCache[subreddit].posts.push(post);
+      if (tempCache[post.subreddit]) {
+        tempCache[post.subreddit].posts.push(post);
       } else {
-        tempCache[subreddit] = {lastUpdate: new Date(), posts: [post]};
+        tempCache[post.subreddit] = {lastUpdate: new Date(), posts: [post]};
       }
     });
 
