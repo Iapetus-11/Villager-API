@@ -16,8 +16,6 @@ export function drawImage(ctx, src, x, y, width, height) {
 
 // Function for drawing text that auto resizes easily
 export function drawText(ctx, text, x, y, fontName, color, defaultSize, maxWidth, alignment) {
-  ctx.save();
-
   ctx.textBaseline = 'middle';
   ctx.fillStyle = color;
   ctx.textAlign = alignment;
@@ -31,8 +29,6 @@ export function drawText(ctx, text, x, y, fontName, color, defaultSize, maxWidth
   }
 
   ctx.fillText(text, x, y);
-
-  ctx.restore();
 }
 
 // Make a rectangular clip/border with round edges on the given ctx
