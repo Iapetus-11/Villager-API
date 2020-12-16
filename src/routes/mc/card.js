@@ -128,7 +128,7 @@ router.get('/:mcserver', async (req, res) => {
     drawTopText(ctx, status, mcserver, customName)
   ];
 
-  Promise.all(drawers);
+  await Promise.all(drawers);
   sendImage(image, res, 'mcstatus.png');
 });
 
