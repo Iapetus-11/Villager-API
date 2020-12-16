@@ -88,16 +88,17 @@ async function drawTopText(ctx, status, mcserver, customName) {
   ctx.textBaseline = 'bottom';
   ctx.textAlign = 'start';
 
-  let nameWidth = drawText(ctx, (customName || mcserver), 146, 50, 'Minecraft', '#FFF', 22, 324, 'start');
+  let top = 25;
+  let nameWidth = drawText(ctx, (customName || mcserver), 146, top, 'Minecraft', '#FFF', 22, 324, 'start');
 
-  ctx.textAlign = 'center';
+  //ctx.textAlign = 'center';
 
-  let playerWidth = drawText(ctx, `${status.players_online}/${status.players_max}`, 762, 50, 'Minecraft', '#FFF', 22, 999, 'end');
+  let playerWidth = drawText(ctx, `${status.players_online}/${status.players_max}`, 762, top, 'Minecraft', '#FFF', 22, 999, 'end');
 
-  ctx.textAlign = 'end';
+  //ctx.textAlign = 'end';
 
   if (status.online) {
-    ctx.fillText(`${status.latency}ms`, ((140+nameWidth)+(768-playerWidth))/2, 50);
+    ctx.fillText(`${status.latency}ms`, ((140+nameWidth)+(768-playerWidth))/2, top);
   }
 }
 
