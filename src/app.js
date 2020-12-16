@@ -29,9 +29,9 @@ function limitHandler(req, res) { // Handler for if/when a rate limit is reached
   res.status(429).json({
     success: false,
     message: 'Too many requests! You have hit the rate limit.',
-    limit: req.ratelimit.limit,
-    current: req.ratelimit.current,
-    remaining: req.ratelimit.remaining
+    limit: req.rateLimit.limit,
+    current: req.rateLimit.current,
+    remaining: req.rateLimit.remaining
   });
 }
 
