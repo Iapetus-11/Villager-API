@@ -56,6 +56,8 @@ async function fetchRedditPosts(subreddits, limit) {
 router.get('/:subreddits', async (req, res) => {
   let subreddits = req.params.subreddits; // Should be a string
 
+  console.log(subredditCache);
+
   for (let c of subreddits.toLowerCase()) {  // Sanitize input
     if ('abcdefghijklmnopqrstuvwxyz+_'.indexOf(c) == -1) {
       res.status(400).json({success: false, message: 'Bad Request - URL parameter subreddits is invalid'});
