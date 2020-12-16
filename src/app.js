@@ -55,13 +55,13 @@ const app = express();
 app.use(helmet());
 
 // Load routes
-app.use('/reddit/gimme', routeRedditGimme);
+app.use('/reddit/gimme', makeRateLimit(1, 1.5), routeRedditGimme);
 
-app.use('/mc/status', routeMinecraftStatus);
-app.use('/mc/favicon', routeMinecraftFavicon);
-app.use('/mc/statuscard', routeMinecraftCard);
-app.use('/mc/achievement', routeMinecraftAchieve);
-app.use('/mc/splash', routeMinecraftSplash);
+app.use('/mc/status', makeRateLimit(1, 2.5), routeMinecraftStatus);
+app.use('/mc/favicon', makeRateLimit(1, 2.5), routeMinecraftFavicon);
+app.use('/mc/statuscard', makeRateLimit(1, 2.5), routeMinecraftCard);
+app.use('/mc/achievement', makeRateLimit(1, 1), routeMinecraftAchieve);
+app.use('/mc/splash', makeRateLimit(1, 1), routeMinecraftSplash);
 
 app.get('/', (req, res) => {
   res.status(200).json({
