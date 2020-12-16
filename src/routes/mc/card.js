@@ -18,7 +18,7 @@ async function drawMOTD(ctx, status) {
   if (!status.online) motd = 'This server is offline.';
 
   // Determine what format the MOTD is in
-  if (typeof(motd) == []) {
+  if (typeof(motd) == typeof([])) {
     try {
       motd.extra.length;
       motdVer = 'attributes_array';
@@ -42,7 +42,7 @@ async function drawMOTD(ctx, status) {
   if (motdVer == 'attributes_array') {
     let currentText = '';
 
-    motd.extra.push(motd.text); // For consistency purposes
+    motd.extra.push(motd.text); // For consistency purpose
 
     for (let entry of motd.extra) {
       if (!entry.text) continue; // Check if there's actually text to draw
