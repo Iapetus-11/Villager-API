@@ -7,6 +7,7 @@ import fs from 'fs';
 dotenv.config(); // Add keys/private data to process.env
 
 // Import routes
+import routeRedditGimme from './routes/reddit/gimme.js';
 
 function keyGenerator(req) { // Handles requests coming through cloudflare as the default keygen would mess up here
   let cfConnecting = req.get('CF-Connecting-IP');
@@ -44,7 +45,11 @@ function makeRateLimit(limit, per) { // Function for easily adding a ratelimit, 
 
 const app = express();
 
+// Load middleware
 app.use(helmet());
+
+// Load routes
+app.use('/reddit', routeRedditGimme);
 
 app.get('/', (req, res) => {
   res.status(200).json({
