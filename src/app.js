@@ -13,6 +13,7 @@ import routeMinecraftStatus from './routes/mc/status.js';
 import routeMinecraftFavicon from './routes/mc/favicon.js';
 import routeMinecraftCard from './routes/mc/card.js';
 import routeMinecraftAchieve from './routes/mc/achievement.js';
+import routeMinecraftSplash from './routes/mc/splash.js';
 
 function keyGenerator(req) { // Handles requests coming through cloudflare as the default keygen would mess up here
   let cfConnecting = req.get('CF-Connecting-IP');
@@ -55,10 +56,12 @@ app.use(helmet());
 
 // Load routes
 app.use('/reddit/gimme', routeRedditGimme);
+
 app.use('/mc/mcstatus', routeMinecraftStatus);
 app.use('/mc/favicon', routeMinecraftFavicon);
 app.use('/mc/statuscard', routeMinecraftCard);
 app.use('/mc/achievement', routeMinecraftAchieve);
+app.use('/mc/splash', routeMinecraftSplash);
 
 app.get('/', (req, res) => {
   res.status(200).json({
