@@ -24,7 +24,7 @@ async function fetchRedditPosts(subreddits, limit) {
   }
 
   res.data.data.children.forEach(p => {
-    if (!(p.removal_reason || p.is_video || p.pinned || p.stickied || pos.selftext)) {
+    if (!(p.removal_reason || p.is_video || p.pinned || p.stickied || p.selftext)) {
       if (p.url && ['.png', '.jpg', '.gif', 'jpeg'].includes(p.url.slice(-4))) {
         posts.push({
           id: p.id,
