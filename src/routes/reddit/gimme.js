@@ -69,8 +69,7 @@ router.get('/gimme/:subreddits', async (req, res) => {
   });
 
   if (cached.length > 1) {
-    let post = cached[Math.floor(Math.random() * cached.length)];
-    post.success = true;
+    let post = {success: true, ...cached[Math.floor(Math.random() * cached.length)]};
     res.status(200).json(post);
   } else {
     let posts = await fetchRedditPosts(subreddits, 5);
