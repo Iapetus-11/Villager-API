@@ -56,8 +56,6 @@ async function fetchRedditPosts(subreddits, limit) {
 router.get('/:subreddits', async (req, res) => {
   let subreddits = req.params.subreddits; // Should be a string
 
-  console.log(subredditCache);
-
   for (let c of subreddits.toLowerCase()) {  // Sanitize input
     if ('abcdefghijklmnopqrstuvwxyz+_'.indexOf(c) == -1) {
       res.status(400).json({success: false, message: 'Bad Request - URL parameter subreddits is invalid'});
@@ -74,8 +72,7 @@ router.get('/:subreddits', async (req, res) => {
 
   let cached = [];
   subredditList.forEach(subreddit => {
-    cached = [cached, ...((subredditCache[subreddit] || Object()).posts || [])];
-    console.log(subredditCache[subreddit])
+    cached.push(...((subredditCache[subreddit] || Object()).posts || [])]);
   });
 
   if (cached.length > 1) {
