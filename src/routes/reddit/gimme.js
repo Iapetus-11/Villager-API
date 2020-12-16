@@ -16,7 +16,14 @@ function clearSubredditCache() { // Clear outdated posts from the cache
 setInterval(clearSubredditCache, 1000); // Clear subreddit cache every second
 
 async function fetchRedditPosts(subreddits, limit) {
-  let res = await axios.get(`https://reddit.com/r/${subreddits}/hot/.json?limit=${limit}`);
+  let res;
+
+  try {
+    res = await axios.get(`https://reddit.com/r/${subreddits}/hot/.json?limit=${limit}`);
+  } catch (error) {
+    return false;
+  }
+
   let posts = [];
 
   if (res.status != 200) {
