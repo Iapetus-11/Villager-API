@@ -57,7 +57,7 @@ app.use(helmet());
 // Load routes
 app.use('/reddit/gimme', routeRedditGimme);
 
-app.use('/mc/mcstatus', routeMinecraftStatus);
+app.use('/mc/status', routeMinecraftStatus);
 app.use('/mc/favicon', routeMinecraftFavicon);
 app.use('/mc/statuscard', routeMinecraftCard);
 app.use('/mc/achievement', routeMinecraftAchieve);
