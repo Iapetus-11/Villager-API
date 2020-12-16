@@ -28,7 +28,7 @@ function keyGenerator(req) { // Handles requests coming through cloudflare as th
 function limitHandler(req, res) { // Handler for if/when a rate limit is reached
   res.status(429).json({
     success: false,
-    message: 'Too many requests! You have hit the rate limit.',
+    message: 'Error - You\'ve hit the rate limit',
     limit: req.rateLimit.limit,
     current: req.rateLimit.current,
     remaining: req.rateLimit.remaining
@@ -71,7 +71,7 @@ app.get('/', (req, res) => {
 });
 
 app.use((req, res) => { // Handle 404s, must be last to work
-  res.status(404).json({message: 'Endpoint not found or method not supported for this endpoint'});
+  res.status(404).json({message: 'Error - Endpoint not found or method not supported for this endpoint'});
 });
 
 app.listen(process.env.PORT, () => { // Run the app
