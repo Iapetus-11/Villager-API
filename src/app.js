@@ -55,7 +55,7 @@ const app = express();
 app.use(helmet());
 
 // Load routes
-app.use('/reddit/gimme', makeRateLimit(1, 1.5), routeRedditGimme);
+app.use('/reddit/gimme', makeRateLimit(2, 2.5), routeRedditGimme);
 
 app.use('/mc/status', makeRateLimit(1, 2.5), routeMinecraftStatus);
 app.use('/mc/favicon', makeRateLimit(1, 2.5), routeMinecraftFavicon);
