@@ -107,6 +107,11 @@ router.get('/:mcserver', async (req, res) => {
     return;
   }
 
+  if (customName && 0 > customName.length > 50) {
+    res.status(400).json({success: false, message: 'Bad Request - Query parameter name is invalid'});
+    return;
+  }
+
   let status = await mcstatus(mcserver);
 
   let image = canvas.createCanvas(768, 140);
