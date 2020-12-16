@@ -23,7 +23,7 @@ router.get('/:text', async (req, res) => {
   ctx.patternQuality = 'nearest';
   ctx.textDrawingMode = 'glyph';
 
-  await drawImage(ctx, './src/assets/achievement.png', 0, 0, 64, 64);
+  await drawImage(ctx, './src/assets/achievement.png', 0, 0, 320, 64);
   drawText(ctx, text, 60, 45, 'Minecraft', '#FFF', 15, 250, 'left');
 
   sendImage(image, res, 'achievement.png');
