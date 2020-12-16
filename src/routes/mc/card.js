@@ -103,7 +103,7 @@ router.get('/:mcserver', async (req, res) => {
 
   let status = await mcstatus(mcserver);
 
-  let image = Canvas.createCanvas(768, 140);
+  let image = canvas.createCanvas(768, 140);
   let ctx = image.getContext('2d');
 
   roundEdges(ctx, 0, 0, 768, 140, 3); // Make image corners rounded slightly
