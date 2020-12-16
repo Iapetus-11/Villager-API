@@ -21,12 +21,12 @@ export function mcstatus(mcserver) {
     } else {
       axios.get('http://localhost:2304/mcstatus', {data: {mcserver: mcserver}})
       .then(res => {
-        let status = {...res.data, cached: false, cacheTime: null};
+        let status = {...res.data, cached: false, cache_time: null};
 
         resolve(status);
 
         // Insert into cache
-        mcstatusCache[mcserver] = {...res.data, cached: true, cacheTime: (new Date())};
+        mcstatusCache[mcserver] = {...res.data, cached: true, cache_time: (new Date())};
       })
       .catch(e => reject(e));
     }
