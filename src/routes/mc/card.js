@@ -117,8 +117,11 @@ router.get('/:mcserver', async (req, res) => {
 
   roundEdges(ctx, 0, 0, 768, 140, 3); // Make image corners rounded slightly
 
-  ctx.imageSmoothingEnabled = false; // Best for dealing with pixels
+  // Settings I think are best for dealing with pixely images
+  ctx.imageSmoothingEnabled = false;
   ctx.quality = 'nearest'; // Nearest neighbor is best for dealing with pixels, it's Minecraft
+  ctx.patternQuality = 'nearest';
+  ctx.textDrawingMode = 'glyph';
 
   await drawImage(ctx, './src/assets/dirt_background.png', 0, 0, 768, 140);
 
