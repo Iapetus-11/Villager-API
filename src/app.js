@@ -55,7 +55,7 @@ app.use(helmet());
 app.use('/reddit/gimme', routeRedditGimme);
 app.use('/mc/mcstatus', routeMinecraftStatus);
 app.use('/mc/favicon', routeMinecraftFavicon);
-app.use('/mc/card', routeMinecraftCard);
+app.use('/mc/statuscard', routeMinecraftCard);
 
 app.get('/', (req, res) => {
   res.status(200).json({
