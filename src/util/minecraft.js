@@ -17,7 +17,7 @@ export function mcstatus(mcserver) {
     let cached = mcstatusCache[mcserver];
 
     if (cached) {
-      return cached;
+      resolve(cached);
     } else {
       axios.get('http://localhost:2304/mcstatus', {data: {mcserver: mcserver}})
       .then(res => {
