@@ -19,7 +19,7 @@ async function fetchRedditPosts(subreddits, limit) {
   let res = await axios.get(`https://reddit.com/r/${subreddits}/hot/.json?limit=5`);
   let posts = [];
 
-  if (redditRes.status != 200) {
+  if (res.status != 200) {
     return false;
   }
 
