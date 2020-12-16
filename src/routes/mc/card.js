@@ -116,7 +116,7 @@ router.get('/:mcserver', async (req, res) => {
   let drawers = [
     drawMOTD(ctx, status),
     drawImage(ctx, (status.favicon || './src/assets/unknown_pack.png'), 6, 6, 128, 128),
-    drawTopText(ctx, status, mcserver, customName);
+    drawTopText(ctx, status, mcserver, customName)
   ];
 
   Promise.all(drawers);
