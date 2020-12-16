@@ -40,8 +40,6 @@ async function drawMOTD(ctx, status) {
   let drawnPixelsVerti = 0;
 
   if (motdVer == 'attributes_array') {
-    let currentText = '';
-
     motd.extra.push(motd.text); // For consistency purpose
 
     for (let entry of motd.extra) {
@@ -52,13 +50,13 @@ async function drawMOTD(ctx, status) {
         ctx.fillStyle = '#'.concat(MCData.minecraftColors[entry.color.toLowerCase()][2]);
       }
 
-      if (currentText.indexOf('\n') != -1) {
+      if (entry.text.indexOf('\n') != -1) {
         drawnPixelsVerti += 27;
         drawnPixels = 0;
       }
 
-      ctx.fillText(currentText, 146+drawnPixels, 98+drawnPixelsVerti);
-      drawnPixels += ctx.measureText(currentText).width;
+      console.log(ctx.fillText(entry.text, 146+drawnPixels, 98+drawnPixelsVerti));
+      drawnPixels += ctx.measureText(entry.text).width;
     }
   } else {
     let newStyle;
