@@ -18,14 +18,14 @@ async function drawMOTD(ctx, status) {
   if (!status.online) motd = 'This server is offline.';
 
   // Determine what format the MOTD is in
-  if (typeof(motd) == typeof([])) {
-    try {
-      motd.extra.length;
-      motdVer = 'attributes_array';
-    } catch (error) {
-      motd = motd.join('');
-      motdVer = 'rich_text';
-    }
+  if (motd.extra && motd.extra.length) {
+    motdVer = 'attributes_array';
+  } else if (typeof(motd) != 'string' && motd.length) {
+    motd = motd.join('');
+    motdVer = 'rich_text';
+  } else if (motd.text) {
+    motd = motd.text;
+    motdVer = 'rich_text';
   } else {
     motdVer = 'rich_text';
   }
