@@ -75,7 +75,6 @@ router.get('/:subreddits', async (req, res) => {
   let cached = [];
   subredditList.forEach(subreddit => {
     cached = [cached, ...((subredditCache[subreddit] || Object()).posts || [])];
-    console.log(subredditCache[subreddit]);
   });
 
   if (cached.length > 1) {
