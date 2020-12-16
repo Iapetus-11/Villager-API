@@ -57,7 +57,7 @@ router.get('/:subreddits', async (req, res) => {
   let subreddits = req.params.subreddits; // Should be a string
 
   for (let c of subreddits.toLowerCase()) {  // Sanitize input
-    if ('abcdefghijklmnopqrstuvwxyz+'.indexOf(c) == -1) {
+    if ('abcdefghijklmnopqrstuvwxyz+_'.indexOf(c) == -1) {
       res.status(400).json({success: false, message: 'Bad Request - URL parameter subreddits is invalid'});
       return;
     }
