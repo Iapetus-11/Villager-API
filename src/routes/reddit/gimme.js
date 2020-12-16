@@ -61,7 +61,7 @@ router.get('/gimme/:subreddits', async (req, res) => {
 
   let subredditList = subreddits.split('+');
 
-  cached = [];
+  let cached = [];
   subredditList.forEach(subreddit => {
     cached = [cached, ...((subredditCache[subreddit] || Object()).posts || [])];
   });
