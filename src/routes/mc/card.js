@@ -3,7 +3,7 @@ import canvas from 'canvas';
 import fs from 'fs';
 
 import {mcstatus} from '../../util/minecraft.js';
-import {drawImage, sendImage, roundEdges} from '../../util/canvas.js';
+import {drawImage, drawText, sendImage, roundEdges} from '../../util/canvas.js';
 
 const MCData = JSON.parse(fs.readFileSync('./src/mcdata.json'));
 const router = express.Router();
@@ -84,6 +84,14 @@ async function drawMOTD(ctx, status) {
   }
 }
 
+async function drawTopText(ctx, status, mcserver, customName) {
+  let width = drawText(ctx, (customName || mcserver), 146, 50, 'Minecraft', '#FFF', 22, 324, 'start');
+
+  if (status.online) {
+    ctx.fillText(`${status.latency}ms`, ((140+serverNameWidth)+(768-rightMost))/2, 50);
+  }
+}
+
 router.get('/:mcserver', async (req, res) => {
   let mcserver = req.params.mcserver;
   let customName = req.query.name;
@@ -105,7 +113,14 @@ router.get('/:mcserver', async (req, res) => {
 
   await drawImage(ctx, './src/assets/dirt_background.png', 0, 0, 768, 140);
 
+  let drawers = [
+    drawMOTD(ctx, status),
+    drawImage(ctx, (status.favicon || './src/assets/unknown_pack.png'), 6, 6, 128, 128),
+    drawTopText(ctx, status, mcserver, customName);
+  ];
 
+  Promise.all(drawers);
+  sendImage(image, res, 'mcstatus.png');
 });
 
 export default router;
