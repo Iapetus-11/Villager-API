@@ -9,7 +9,6 @@ import struct
 # default / offline server
 default = {
     'online': False, # boolean
-    'map': None, # string
     'players_online': 0, # int
     'players_max': 0, # int
     'players_names': [], # List['player', 'player']
