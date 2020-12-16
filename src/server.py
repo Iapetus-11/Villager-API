@@ -108,7 +108,7 @@ async def mcstatus(host, port, do_resolve=False):
 
     try:
         for status in asyncio.as_completed(statuses, timeout=2):
-            status = await asyncio.wait_for(status, timeout=.25)
+            status = await status
 
             if status['online']:
                 return status
