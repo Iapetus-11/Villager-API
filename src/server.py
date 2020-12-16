@@ -60,6 +60,8 @@ async def raknet_status(host, port): # Should work on all BE servers
 
         await stream.send(data)
         data, _ = await stream.recv()
+
+        stream.close()
     except Exception:
         return default
 
