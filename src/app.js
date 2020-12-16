@@ -9,7 +9,7 @@ dotenv.config(); // Add keys/private data to process.env
 // Import routes
 import routeRedditGimme from './routes/reddit/gimme.js';
 
-import routeMinecraftStatus from './routes/mc/mcstatus.js';
+import routeMinecraftStatus from './routes/mc/status.js';
 import routeMinecraftFavicon from './routes/mc/favicon.js';
 import routeMinecraftCard from './routes/mc/card.js';
 import routeMinecraftAchieve from './routes/mc/achievement.js';
