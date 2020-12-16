@@ -4,8 +4,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 ## Routes / Endpoints
 ### **Minecraft Related Endpoints/Routes**
-* [Ratelimit: 2 requests / 2.5 seconds] (Applies to all endpoints under /mc/)
-* `GET /mc/status/:mcserver`
+* `GET /mc/status/:mcserver` [Ratelimit: 1 request / 2.5 seconds]
   * Takes one **url** parameter:
     * `mcserver` (required) which is the host/ip of the server
   * Example: `GET https://api.iapetus11.me/mc/status/hypixel.net:25565`
@@ -13,7 +12,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 <br>
 
-* `GET /mc/statuscard/:mcserver`
+* `GET /mc/statuscard/:mcserver` [Ratelimit: 1 request / 2.5 seconds]
   * takes one **url** and one [optional] **query** parameter:
     * `mcserver` (required, url parameter) which is the host/ip of the server
     * `name` (optional, query parameter) text which will be shown instead of the server ip in the generated image
@@ -22,7 +21,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 <br>
 
-* `GET /mc/favicon/:mcserver`
+* `GET /mc/favicon/:mcserver` [Ratelimit: 1 request / 2.5 seconds]
   * takes one **url** parameter:
     * `mcserver` (required) which is the host/ip of the server
   * Example: `GET https://api.iapetus11.me/mc/favicon/hypixel.net:25565`
@@ -30,7 +29,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 <br>
 
-* `GET /mc/achievement/:text`
+* `GET /mc/achievement/:text` [Ratelimit: 1 request / 1 second]
   * takes on **url** parameter:
     * `text` (required) which is the text which goes in the generated achievement (Must not be over 30 characters)
   * Example: `GET https://api.iapetus11.me/mc/achievement/best%20api`
@@ -38,7 +37,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 <br>
 
-* `GET /mc/splash/:text`
+* `GET /mc/splash/:text` [Ratelimit: 1 request / 1 second]
   * takes on **url** parameter:
     * `text` (required) which is the text which goes in the generated achievement (Must not be over 30 characters)
   * Example: `GET https://api.iapetus11.me/mc/splash/villager%20bot%20best%20bot`
@@ -47,8 +46,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 <br>
 
 ### **Reddit Related Endpoints/Routes**
-* [Ratelimit: 2 requests / 2.5 seconds] (Applies to all endpoints under /reddit/)
-* `GET /reddit/gimme/:subreddits`
+* `GET /reddit/gimme/:subreddits` [Ratelimit: 2 requests / 2.5 seconds]
   * takes one parameter **in the url**
     * `subreddits` (required) the subreddits to fetch images from
   * Example 1: `GET https://api.iapetus11.me/reddit/gimme/dankmemes`
