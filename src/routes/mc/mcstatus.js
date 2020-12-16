@@ -4,7 +4,7 @@ import {mcstatus} from '../../util/minecraft.js';
 
 const router = express.Router();
 
-router.get('/mcstatus/:mcserver', async (req, res) => {
+router.get('/:mcserver', async (req, res) => {
   let mcserver = req.params.mcserver;
 
   if (4 > mcserver.length > 150) {

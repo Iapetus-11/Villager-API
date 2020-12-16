@@ -53,7 +53,7 @@ async function fetchRedditPosts(subreddits, limit) {
   return posts;
 }
 
-router.get('/gimme/:subreddits', async (req, res) => {
+router.get('/:subreddits', async (req, res) => {
   let subreddits = req.params.subreddits; // Should be a string
 
   for (let c of subreddits.toLowerCase()) {  // Sanitize input
