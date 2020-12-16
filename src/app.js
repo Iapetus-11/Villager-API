@@ -10,6 +10,7 @@ dotenv.config(); // Add keys/private data to process.env
 import routeRedditGimme from './routes/reddit/gimme.js';
 import routeMinecraftStatus from './routes/mc/mcstatus.js';
 import routeMinecraftFavicon from './routes/mc/favicon.js';
+import routeMinecraftCard from './routes/mc/card.js';
 
 function keyGenerator(req) { // Handles requests coming through cloudflare as the default keygen would mess up here
   let cfConnecting = req.get('CF-Connecting-IP');
@@ -54,6 +55,7 @@ app.use(helmet());
 app.use('/reddit/gimme', routeRedditGimme);
 app.use('/mc/mcstatus', routeMinecraftStatus);
 app.use('/mc/favicon', routeMinecraftFavicon);
+app.use('/mc/card', routeMinecraftCard);
 
 app.get('/', (req, res) => {
   res.status(200).json({
