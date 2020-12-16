@@ -17,7 +17,8 @@ default = {
     'version': {'brand': None, 'software': None, 'protocol': None}, # dict
     'motd': None, # string
     'favicon': None, # string / dataurl
-    'plugins': [], # List['plugin', 'plugin']
+    #'plugins': [], # List['plugin', 'plugin']
+    'map': None,
     'gamemode': None # string
 }
 
