@@ -29,6 +29,8 @@ export function drawText(ctx, text, x, y, fontName, color, defaultSize, maxWidth
   }
 
   ctx.fillText(text, x, y);
+
+  return ctx.measureText(text).width;
 }
 
 // Make a rectangular clip/border with round edges on the given ctx
