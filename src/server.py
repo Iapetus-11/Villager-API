@@ -25,7 +25,7 @@ abcd = 'abcdefghijklmnopqrstuvwxyz'
 
 async def ping_status(host, port):  # all je servers support this
     try:
-        status = await MinecraftServer(host, port).async_status(tries=2)
+        status = await MinecraftServer(host, port).async_status(tries=1)
     except Exception:
         return default
 
