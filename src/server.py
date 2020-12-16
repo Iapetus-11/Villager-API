@@ -98,11 +98,10 @@ async def mcstatus(host, port, do_resolve=False):
         for c in host:
             if c in abcd:
                 try:
-                    print('before resolve')
-                    d_ans = await asyncio.wait_for(dns.asyncresolver.Resolver().resolve(f'_minecraft._tcp.{host}', 'SRV', search=True), 1)
-                    print('after resolve?')
+                    d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True, tcp=True), 1)
                     return await mcstatus(d_ans[0].target.to_text().strip('.'), d_ans[0].port)
-                except Exception:
+                except Exception as e:
+                    print(e)
                     break
 
     statuses = [
