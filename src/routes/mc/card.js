@@ -55,7 +55,7 @@ async function drawMOTD(ctx, status) {
         drawnPixels = 0;
       }
 
-      console.log(ctx.fillText(entry.text, 146+drawnPixels, 98+drawnPixelsVerti));
+      ctx.fillText(entry.text, 146+drawnPixels, 98+drawnPixelsVerti);
       drawnPixels += ctx.measureText(entry.text).width;
     }
   } else {
