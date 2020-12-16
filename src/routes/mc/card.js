@@ -3,7 +3,7 @@ import canvas from 'canvas';
 import fs from 'fs';
 
 import {mcstatus} from '../../util/minecraft.js';
-import {drawImage, drawText, sendImage, roundEdges} from '../../util/canvas.js';
+import {drawImage, drawText, roundEdges, sendImage} from '../../util/canvas.js';
 
 const MCData = JSON.parse(fs.readFileSync('./src/mcdata.json'));
 const router = express.Router();
