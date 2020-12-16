@@ -121,6 +121,7 @@ router.get('/:mcserver', async (req, res) => {
   ctx.imageSmoothingEnabled = false;
   ctx.quality = 'nearest'; // Nearest neighbor is best for dealing with pixels, it's Minecraft
   ctx.patternQuality = 'nearest';
+  ctx.textDrawingMode = 'glyph';
 
   await drawImage(ctx, './src/assets/dirt_background.png', 0, 0, 768, 140);
 
