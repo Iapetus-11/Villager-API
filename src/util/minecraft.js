@@ -19,14 +19,14 @@ export function mcstatus(mcserver) {
     if (cached) {
       return cached;
     } else {
-      axios.get('http://localhost:2304/mcstatus', { data: { mcserver: mcserver } })
+      axios.get('http://localhost:2304/mcstatus', {data: {mcserver: mcserver}})
       .then(res => {
-        let status = Object.assign(res.data, { cached: false, cacheTime: null });
+        let status = Object.assign(res.data, {cached: false, cacheTime: null});
 
         resolve(status);
 
         // Insert into cache
-        mcstatusCache[mcserver] = Object.assign(Object.assign({}, res.data), { cached: true, cacheTime: (new Date()) });
+        mcstatusCache[mcserver] = Object.assign(Object.assign({}, res.data), {cached: true, cacheTime: (new Date())});
       })
       .catch(e => reject(e));
     }

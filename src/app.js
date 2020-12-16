@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
 });
 
 app.use((req, res) => { // Handle 404s, must be last to work
-  res.status(404).json({ message: 'Endpoint not found or method not supported for this endpoint' });
+  res.status(404).json({message: 'Endpoint not found or method not supported for this endpoint'});
 });
 
 app.listen(process.env.PORT, () => { // Run the app
