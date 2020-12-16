@@ -85,10 +85,11 @@ async function drawMOTD(ctx, status) {
 }
 
 async function drawTopText(ctx, status, mcserver, customName) {
-  let width = drawText(ctx, (customName || mcserver), 146, 50, 'Minecraft', '#FFF', 22, 324, 'start');
+  let nameWidth = drawText(ctx, (customName || mcserver), 146, 50, 'Minecraft', '#FFF', 22, 324, 'start');
+  let playerWidth = drawText(ctx, `${status.players_online}/${status.players_max}`, 762, 50, 'Minecraft', '#FFF', 22, 999, 'end')
 
   if (status.online) {
-    ctx.fillText(`${status.latency}ms`, ((140+serverNameWidth)+(768-rightMost))/2, 50);
+    ctx.fillText(`${status.latency}ms`, ((140+nameWidth)+(768-playerWidth))/2, 50);
   }
 }
 
