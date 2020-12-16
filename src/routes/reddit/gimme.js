@@ -51,13 +51,13 @@ router.get('/gimme/:subreddits', async (req, res) => {
 
   for (let c of subreddits.toLowerCase()) {  // Sanitize input
     if ('abcdefghijklmnopqrstuvwxyz+'.indexOf(c) == -1) {
-      res.status(400).json({success: false, message: 'Bad Request - Body parameter subreddits is invalid'});
+      res.status(400).json({success: false, message: 'Bad Request - URL parameter subreddits is invalid'});
       return;
     }
   }
 
   if (subreddits.startsWith('+') || subreddits.endsWith('+')) {
-    res.status(400).json({success: false, message: 'Bad Request - Body parameter subreddits is invalid'});
+    res.status(400).json({success: false, message: 'Bad Request - URL parameter subreddits is invalid'});
     return;
   }
 
