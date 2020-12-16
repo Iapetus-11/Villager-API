@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-var mcstatusCache = {}; // { 'server': { data } }
+var mcstatusCache = {}; // {'server': {data}}
 
 function clearCacheLoop() { // Clear old / outdated statuses from the cache
   Object.keys(mcstatusCache).forEach(key => {
