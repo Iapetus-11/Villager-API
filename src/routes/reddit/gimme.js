@@ -33,7 +33,7 @@ async function fetchRedditPosts(subreddits, limit) {
           author: p.author,
           title: p.title,
           permalink: 'https://reddit.com' + p.permalink,
-          url: p.url,
+          image: p.url,
           upvotes: p.ups,
           downvotes: p.downs,
           nsfw: p.over_18,
