@@ -4,8 +4,7 @@ var mcstatusCache = {}; // {'server': {data}}
 
 function clearCacheLoop() { // Clear old / outdated statuses from the cache
   Object.keys(mcstatusCache).forEach(key => {
-    if ((new Date() - mcstatusCache[key].cacheTime) > 10) {
-      console.log(`Clearing ${key} from the cache...`);
+    if ((new Date() - mcstatusCache[key].cache_time)/1000 > 10) {
       delete mcstatusCache[key];
     }
   });
