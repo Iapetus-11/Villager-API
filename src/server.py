@@ -112,7 +112,8 @@ async def mcstatus(host, port, do_resolve=False):
 
             if status['online']:
                 return status
-    except Exception:
+    except Exception as e:
+        print(e)
         return default
 
     return status
