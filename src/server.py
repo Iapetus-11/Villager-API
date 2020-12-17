@@ -4,6 +4,7 @@ import dns.asyncresolver
 from aiohttp import web
 import asyncio_dgram
 import asyncio
+import struct
 
 # default / offline server
 default = {
