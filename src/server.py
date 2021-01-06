@@ -107,10 +107,7 @@ async def mcstatus(host, port, do_resolve=False):
 
                 break
 
-    statuses = [
-        ping_status(host, port),
-        raknet_status(host, port)
-    ]
+    statuses = (ping_status(host, port), raknet_status(host, port),)
 
     try:
         for status in asyncio.as_completed(statuses, timeout=2):
