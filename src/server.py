@@ -29,7 +29,7 @@ async def ping_status(host, port):  # all je servers support this
 
     try:
         status = await MinecraftServer(host, port).async_status(tries=1)
-    except Exception:
+    except BaseException:
         return default
 
     s_dict = default.copy()
@@ -64,7 +64,7 @@ async def raknet_status(host, port): # Should work on all BE servers
         data, _ = await stream.recv()
 
         stream.close()
-    except Exception:
+    except BaseException:
         return default
 
     latency = round((perf_counter() - start), 2)
@@ -115,7 +115,7 @@ async def mcstatus(host, port, do_resolve=False):
 
             if status['online']:
                 return status
-    except Exception:
+    except BaseException:
         return default
 
     return status
@@ -127,7 +127,7 @@ def cleanup(server):
 
         try:
             port = int(split[1])
-        except Exception:
+        except BaseException:
             port = None
     else:
         host = server
@@ -150,7 +150,7 @@ def validate(mcserver):
             p = int(s[1])
             if p < 0 > 65535:
                 return False
-        except Exception:
+        except BaseException:
             return False
 
     return True
