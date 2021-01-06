@@ -27,14 +27,10 @@ async def ping_status(host, port):  # all je servers support this
     if port is None:
         port = 25565
 
-    print(host, port)
-    
     try:
         status = await MinecraftServer(host, port).async_status(tries=1)
     except Exception:
         return default
-
-    print(status.__dict__)
 
     s_dict = default.copy()
 
@@ -106,8 +102,8 @@ async def mcstatus(host, port, do_resolve=False):
                 try:
                     d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True, tcp=True), 1)
                     return await mcstatus(d_ans[0].target.to_text().strip('.'), d_ans[0].port)
-                except Exception as e:
-                    print(e)
+                except BaseException:
+                    pass
 
                 break
 
@@ -118,7 +114,6 @@ async def mcstatus(host, port, do_resolve=False):
 
     try:
         for status in asyncio.as_completed(statuses, timeout=2):
-            print('status iter')
             status = await status
 
             if status['online']:
