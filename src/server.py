@@ -99,8 +99,8 @@ async def mcstatus(host, port, do_resolve=False):
                 try:
                     d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True, tcp=True), 1)
                     return await mcstatus(d_ans[0].target.to_text().strip('.'), d_ans[0].port)
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(e)
 
                 break
 
@@ -111,6 +111,7 @@ async def mcstatus(host, port, do_resolve=False):
 
     try:
         for status in asyncio.as_completed(statuses, timeout=2):
+            print('status iter')
             status = await status
 
             if status['online']:
