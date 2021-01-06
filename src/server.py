@@ -30,6 +30,8 @@ async def ping_status(host, port):  # all je servers support this
     except Exception:
         return default
 
+    print(status.__dict__)
+
     s_dict = default.copy()
 
     s_dict['online'] = True
