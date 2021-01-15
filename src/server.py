@@ -5,6 +5,7 @@ from aiohttp import web
 import asyncio_dgram
 import asyncio
 import struct
+import psutil
 
 # default / offline server
 default = {
@@ -111,10 +112,14 @@ async def mcstatus(host, port, do_resolve=False):
 
                 break
 
+    proc = psutil.Process()
+    print(proc.open_files())
+
     statuses = (ping_status(host, port), raknet_status(host, port),)
 
     try:
         for status in asyncio.as_completed(statuses, timeout=2):
+            print(proc.open_files())
             status = await status
 
             if status['online']:
