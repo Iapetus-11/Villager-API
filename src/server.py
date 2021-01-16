@@ -115,8 +115,8 @@ async def mcstatus(host, port, do_resolve=False):
                 pass
 
     statuses = (
-        asyncio.create_task(ping_status(host, port)),
-        asyncio.create_task(raknet_status(host, port))
+        ping_status(host, port),
+        raknet_status(host, port)
     )
 
     try:
