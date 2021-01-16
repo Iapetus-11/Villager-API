@@ -59,11 +59,15 @@ async def raknet_status(host, port): # Should work on all BE servers
 
     try:
         print('opening')
-        stream = await asyncio.wait_for(asyncio_dgram.connect((host, port)), 5)
+        stream = await asyncio.wait_for(asyncio_dgram.connect((host, port)), TIMEOUT)
 
         #data = b'\x01' + struct.pack('>q', 0) + bytearray.fromhex('00 ff ff 00 fe fe fe fe fd fd fd fd 12 34 56 78')
-        await stream.send(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x124Vx')
-        data, _ = await stream.recv()
+        await asyncio.wait_for(
+            stream.send(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x124Vx'),
+            TIMEOUT
+        )
+        
+        data, _ = await asyncio.wait_for(stream.recv(), TIMEOUT)
     except BaseException:
         return DEFAULT
     finally:
