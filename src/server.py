@@ -66,7 +66,7 @@ async def raknet_status(host, port): # Should work on all BE servers
             stream.send(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x124Vx'),
             TIMEOUT
         )
-        
+
         data, _ = await asyncio.wait_for(stream.recv(), TIMEOUT)
     except BaseException:
         return DEFAULT
@@ -114,7 +114,10 @@ async def mcstatus(host, port, do_resolve=False):
             except BaseException:
                 pass
 
-    statuses = (ping_status(host, port), raknet_status(host, port),)
+    statuses = (
+        asyncio.create_task(ping_status(host, port)),
+        asyncio.create_task(raknet_status(host, port))
+    )
 
     try:
         for status in asyncio.as_completed(statuses, timeout=2):
