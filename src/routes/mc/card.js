@@ -93,7 +93,7 @@ async function drawTopText(ctx, status, mcserver, customName) {
 
   if (status.online) {
     // ctx.fillText(`${status.latency}ms`, ((146+nameWidth)+(762-playerWidth))/2, top);
-    drawText(ctx, `${status.latency}ms`, ((146+nameWidth)+(762-playerWidth))/2, top, 'Minecraft', '#FFF', 22, 324, 'start')
+    drawText(ctx, `${status.latency}ms`, ((146+nameWidth)+(762-playerWidth))/2, top, 'Minecraft', '#FFF', 22, 324, 'end')
   }
 }
 
