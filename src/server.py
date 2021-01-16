@@ -143,16 +143,17 @@ def cleanup(server):
     return host, port
 
 def validate(mcserver):
-    if '..' in mcserver: return False
+    if '..' in mcserver:
+        return False
 
-    for char in mcserver:
-        if char not in (ABCD + '1234567890./:'):
-            return False
+    if mcserver.strip(ABCD + '1234567890./:') != '':
+        return False
 
     if len(mcserver) < 4:
         return False
 
     s = mcserver.split(':')
+
     if len(s) > 1:
         try:
             p = int(s[1])
