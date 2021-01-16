@@ -172,7 +172,7 @@ async def handler(r):
 
     mcserver = jj.get('mcserver')
     if mcserver is None:
-        return web.Response(status=400) # 400 bad request
+        return web.Response(status=400)  # 400 bad request
 
     if not validate(mcserver):
         return web.json_response(DEFAULT)
@@ -184,4 +184,4 @@ web_app = web.Application()
 web_app.router.add_view('/mcstatus', handler)
 
 loop = asyncio.get_event_loop()
-web.run_app(web_app, host='localhost', port=2304) # this is blocking
+web.run_app(web_app, host='localhost', port=2304)  # this is blocking
