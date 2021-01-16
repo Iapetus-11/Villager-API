@@ -5,7 +5,6 @@ from aiohttp import web
 import asyncio_dgram
 import asyncio
 import struct
-import psutil
 
 # default / offline server
 default = {
@@ -25,8 +24,6 @@ default = {
 abcd = 'abcdefghijklmnopqrstuvwxyz'
 
 async def ping_status(host, port):  # all je servers support this
-    print('ping pong')
-
     if port is None:
         port = 25565
 
@@ -54,7 +51,6 @@ async def ping_status(host, port):  # all je servers support this
     return s_dict
 
 async def raknet_status(host, port): # Should work on all BE servers
-    print('raknet')
     if port is None:
         port = 19132
 
@@ -100,26 +96,18 @@ async def raknet_status(host, port): # Should work on all BE servers
     return s_dict
 
 async def mcstatus(host, port, do_resolve=False):
-    print('unified')
     if do_resolve:
-        for c in host:
-            if c in abcd:
-                try:
-                    d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True, tcp=True), 1)
-                    return await mcstatus(d_ans[0].target.to_text().strip('.'), d_ans[0].port)
-                except BaseException:
-                    pass
-
-                break
-
-    proc = psutil.Process()
-    print(proc.open_files())
+        if host.strip(abcd) == '':
+            try:
+                d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True, tcp=True), 1)
+                return await mcstatus(d_ans[0].target.to_text().strip('.'), d_ans[0].port)
+            except BaseException:
+                pass
 
     statuses = (ping_status(host, port), raknet_status(host, port),)
 
     try:
         for status in asyncio.as_completed(statuses, timeout=2):
-            print(proc.open_files())
             status = await status
 
             if status['online']:
@@ -130,7 +118,6 @@ async def mcstatus(host, port, do_resolve=False):
     return status
 
 def cleanup(server):
-    print('cleanup')
     if ':' in server:
         split = server.split(':')
         host = split[0]
@@ -146,14 +133,14 @@ def cleanup(server):
     return host, port
 
 def validate(mcserver):
-    print('validate')
     if '..' in mcserver: return False
 
     for char in mcserver:
         if char not in (abcd + '1234567890./:'):
             return False
 
-    if len(mcserver) < 4: return False
+    if len(mcserver) < 4:
+        return False
 
     s = mcserver.split(':')
     if len(s) > 1:
@@ -167,7 +154,6 @@ def validate(mcserver):
     return True
 
 async def handler(r):
-    print('handler')
     if r.remote not in ('::1', 'localhost', '127.0.0.1'):
         return web.Response(status=401)  # 401 unauthed
 
