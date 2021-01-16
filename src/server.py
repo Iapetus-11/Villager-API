@@ -21,7 +21,7 @@ DEFAULT = {
     'gamemode': None  # string
 }
 
-ABCD = 'ABCDefghijklmnopqrstuvwxyz'
+ABCD = 'abcdefghijklmnopqrstuvwxyz'
 TIMEOUT = 2
 
 async def ping_status(host, port):  # all je servers should support this
@@ -104,8 +104,6 @@ async def raknet_status(host, port): # Should work on all BE servers
     return s_dict
 
 async def mcstatus(host, port, do_resolve=False):
-    print(host, ':', port)
-
     if do_resolve and host.strip(ABCD + '1234567890.') == '':
         try:
             d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True, tcp=True), 1)
@@ -145,8 +143,7 @@ def validate(mcserver):
     if '..' in mcserver:
         return False
 
-    if mcserver.strip(ABCD + '1234567890./:') != '':
-        print('invalid', mcserver, mcserver.strip(ABCD + '1234567890./:'))
+    if mcserver.lower().strip(ABCD + '1234567890./:') != '':
         return False
 
     if len(mcserver) < 4:
@@ -158,7 +155,6 @@ def validate(mcserver):
         try:
             p = int(s[1])
             if p < 0 > 65535:
-                print('invalid due to port range')
                 return False
         except BaseException:
             return False
