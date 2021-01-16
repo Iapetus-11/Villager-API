@@ -8,23 +8,23 @@ import struct
 
 # default / offline server
 DEFAULT = {
-    'online': False, # boolean
-    'players_online': 0, # int
-    'players_max': 0, # int
-    'players_names': [], # List['player', 'player']
-    'latency': 0, # float milliseconds
-    'version': {'brand': None, 'software': None, 'protocol': None}, # dict
-    'motd': None, # string
-    'favicon': None, # string / dataurl
-    #'plugins': [], # List['plugin', 'plugin']
-    'map': None,
-    'gamemode': None # string
+    'online': False,  # boolean
+    'players_online': 0,  # int
+    'players_max': 0,  # int
+    'players_names': [],  # List['player', 'player']
+    'latency': 0,  # float milliseconds
+    'version': {'brand': None, 'software': None, 'protocol': None},  # dict
+    'motd': None,  # string
+    'favicon': None,  # string / dataurl
+    #'plugins': [],  # List['plugin', 'plugin']
+    'map': None,  # string
+    'gamemode': None  # string
 }
 
 ABCD = 'ABCDefghijklmnopqrstuvwxyz'
 TIMEOUT = 2
 
-async def ping_status(host, port):  # all je servers support this
+async def ping_status(host, port):  # all je servers should support this
     if port is None:
         port = 25565
 
@@ -42,8 +42,8 @@ async def ping_status(host, port):  # all je servers support this
     s_dict['latency'] = round(status.latency, 2)
     s_dict['version'] = {
         'brand': 'Java Edition',
-        'software': status.version.name, # string
-        'protocol': f'ping {status.version.protocol}', #string
+        'software': status.version.name,
+        'protocol': f'ping {status.version.protocol}',
         'method': 'ping'
     }
     s_dict['motd'] = status.description
