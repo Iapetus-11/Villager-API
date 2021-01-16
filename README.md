@@ -4,7 +4,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 ## Routes / Endpoints
 ### **Minecraft Related Endpoints/Routes**
-* `GET /mc/status/:mcserver` [Ratelimit: 1 request / 2.5 seconds]
+* `GET /mc/status/:mcserver` [Ratelimit: 1 request / 1.5 seconds]
   * Takes one **url** parameter:
     * `mcserver` (required) which is the host/ip of the server
   * Example: `GET https://api.iapetus11.me/mc/status/hypixel.net:25565`
@@ -12,7 +12,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 <br>
 
-* `GET /mc/statuscard/:mcserver` [Ratelimit: 1 request / 2.5 seconds]
+* `GET /mc/statuscard/:mcserver` [Ratelimit: 1 request / 1.5 seconds]
   * takes one **url** and one [optional] **query** parameter:
     * `mcserver` (required, url parameter) which is the host/ip of the server
     * `name` (optional, query parameter) text which will be shown instead of the server ip in the generated image
@@ -21,7 +21,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 
 <br>
 
-* `GET /mc/favicon/:mcserver` [Ratelimit: 1 request / 2.5 seconds]
+* `GET /mc/favicon/:mcserver` [Ratelimit: 1 request / 1.5 seconds]
   * takes one **url** parameter:
     * `mcserver` (required) which is the host/ip of the server
   * Example: `GET https://api.iapetus11.me/mc/favicon/hypixel.net:25565`
@@ -46,7 +46,7 @@ A useful, Minecraft-related and otherwise API, designed to be used by [Villager 
 <br>
 
 ### **Reddit Related Endpoints/Routes**
-* `GET /reddit/gimme/:subreddits` [Ratelimit: 2 requests / 2.5 seconds]
+* `GET /reddit/gimme/:subreddits` [Ratelimit: 2 requests / 1 second]
   * takes one parameter **in the url**
     * `subreddits` (required) the subreddits to fetch images from
   * Example 1: `GET https://api.iapetus11.me/reddit/gimme/dankmemes`
