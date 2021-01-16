@@ -104,6 +104,7 @@ async def raknet_status(host, port): # Should work on all BE servers
     return s_dict
 
 async def mcstatus(host, port, do_resolve=False):
+    print(host)
     if do_resolve and host.strip(ABCD + '1234567890.') == '':
         try:
             d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True, tcp=True), 1)
