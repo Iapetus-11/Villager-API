@@ -143,15 +143,13 @@ def cleanup(server):
 
 def validate(mcserver):
     if '..' in mcserver:
-        print('invalid', mcserver)
         return False
 
     if mcserver.strip(ABCD + '1234567890./:') != '':
-        print('invalid', mcserver)
+        print('invalid', mcserver, mcserver.strip(ABCD + '1234567890./:'))
         return False
 
     if len(mcserver) < 4:
-        print('invalid', mcserver)
         return False
 
     s = mcserver.split(':')
@@ -160,10 +158,9 @@ def validate(mcserver):
         try:
             p = int(s[1])
             if p < 0 > 65535:
-                print('invalid', mcserver)
+                print('invalid due to port range')
                 return False
         except BaseException:
-            print('invalid', mcserver)
             return False
 
     return True
