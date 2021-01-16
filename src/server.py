@@ -7,7 +7,7 @@ import asyncio
 import struct
 
 # default / offline server
-default = {
+DEFAULT = {
     'online': False, # boolean
     'players_online': 0, # int
     'players_max': 0, # int
@@ -21,7 +21,8 @@ default = {
     'gamemode': None # string
 }
 
-abcd = 'abcdefghijklmnopqrstuvwxyz'
+ABCD = 'ABCDefghijklmnopqrstuvwxyz'
+TIMEOUT = 2
 
 async def ping_status(host, port):  # all je servers support this
     if port is None:
@@ -30,9 +31,9 @@ async def ping_status(host, port):  # all je servers support this
     try:
         status = await MinecraftServer(host, port).async_status(tries=1)
     except BaseException:
-        return default
+        return DEFAULT
 
-    s_dict = default.copy()
+    s_dict = DEFAULT.copy()
 
     s_dict['online'] = True
     s_dict['players_online'] = status.players.online
@@ -58,13 +59,13 @@ async def raknet_status(host, port): # Should work on all BE servers
 
     try:
         print('opening')
-        stream = await asyncio_dgram.connect((host, port))
+        stream = await asyncio.wait_for(asyncio_dgram.connect((host, port)), 5)
 
         #data = b'\x01' + struct.pack('>q', 0) + bytearray.fromhex('00 ff ff 00 fe fe fe fe fd fd fd fd 12 34 56 78')
         await stream.send(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x124Vx')
         data, _ = await stream.recv()
     except BaseException:
-        return default
+        return DEFAULT
     finally:
         try:
             print('closing')
@@ -78,7 +79,7 @@ async def raknet_status(host, port): # Should work on all BE servers
     name_length = struct.unpack('>H', data[32:34])[0]
     data = data[34:34+name_length].decode().split(';')
 
-    s_dict = default.copy()
+    s_dict = DEFAULT.copy()
 
     s_dict['online'] = True
     s_dict['players_online'] = int(data[4])
@@ -102,7 +103,7 @@ async def raknet_status(host, port): # Should work on all BE servers
 
 async def mcstatus(host, port, do_resolve=False):
     if do_resolve:
-        if host.strip(abcd) == '':
+        if host.strip(ABCD) == '':
             try:
                 d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True, tcp=True), 1)
                 return await mcstatus(d_ans[0].target.to_text().strip('.'), d_ans[0].port)
@@ -118,7 +119,7 @@ async def mcstatus(host, port, do_resolve=False):
             if status['online']:
                 return status
     except BaseException:
-        return default
+        return DEFAULT
 
     return status
 
@@ -141,7 +142,7 @@ def validate(mcserver):
     if '..' in mcserver: return False
 
     for char in mcserver:
-        if char not in (abcd + '1234567890./:'):
+        if char not in (ABCD + '1234567890./:'):
             return False
 
     if len(mcserver) < 4:
@@ -169,7 +170,7 @@ async def handler(r):
         return web.Response(status=400) # 400 bad request
 
     if not validate(mcserver):
-        return web.json_response(default)
+        return web.json_response(DEFAULT)
 
     status = await mcstatus(*cleanup(mcserver), True)
     return web.json_response(status)
