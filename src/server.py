@@ -62,10 +62,13 @@ async def raknet_status(host, port): # Should work on all BE servers
         #data = b'\x01' + struct.pack('>q', 0) + bytearray.fromhex('00 ff ff 00 fe fe fe fe fd fd fd fd 12 34 56 78')
         await stream.send(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x124Vx')
         data, _ = await stream.recv()
-
-        stream.close()
     except BaseException:
         return default
+    finally:
+        try:
+            stream.close()
+        except BaseException:
+            pass
 
     latency = round((perf_counter() - start), 2)
 
