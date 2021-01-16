@@ -104,7 +104,8 @@ async def raknet_status(host, port): # Should work on all BE servers
     return s_dict
 
 async def mcstatus(host, port, do_resolve=False):
-    print(host)
+    print(host, ':', port)
+
     if do_resolve and host.strip(ABCD + '1234567890.') == '':
         try:
             d_ans = await asyncio.wait_for(dns.asyncresolver.resolve(f'_minecraft._tcp.{host}', 'SRV', search=True, tcp=True), 1)
@@ -142,12 +143,15 @@ def cleanup(server):
 
 def validate(mcserver):
     if '..' in mcserver:
+        print('invalid', mcserver)
         return False
 
     if mcserver.strip(ABCD + '1234567890./:') != '':
+        print('invalid', mcserver)
         return False
 
     if len(mcserver) < 4:
+        print('invalid', mcserver)
         return False
 
     s = mcserver.split(':')
@@ -156,8 +160,10 @@ def validate(mcserver):
         try:
             p = int(s[1])
             if p < 0 > 65535:
+                print('invalid', mcserver)
                 return False
         except BaseException:
+            print('invalid', mcserver)
             return False
 
     return True
