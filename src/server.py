@@ -75,7 +75,7 @@ async def raknet_status(host, port): # Should work on all BE servers
         except BaseException:
             pass
 
-    latency = round((perf_counter() - start), 2)
+    latency = round((perf_counter() - start) * 1000, 2)
 
     data = data[1:]
     name_length = struct.unpack('>H', data[32:34])[0]
