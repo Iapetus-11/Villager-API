@@ -117,7 +117,7 @@ async def mcstatus(host, port, do_resolve=False):
     statuses = (ping_status(host, port), raknet_status(host, port),)
 
     try:
-        for status in asyncio.as_completed(statuses, timeout=2):
+        for status in asyncio.as_completed(statuses, timeout=TIMEOUT):
             status = await status
 
             if status['online']:
