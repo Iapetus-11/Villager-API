@@ -58,7 +58,6 @@ async def raknet_status(host, port): # Should work on all BE servers
     start = perf_counter()
 
     try:
-        print('opening')
         stream = await asyncio.wait_for(asyncio_dgram.connect((host, port)), TIMEOUT)
 
         #data = b'\x01' + struct.pack('>q', 0) + bytearray.fromhex('00 ff ff 00 fe fe fe fe fd fd fd fd 12 34 56 78')
@@ -72,7 +71,6 @@ async def raknet_status(host, port): # Should work on all BE servers
         return DEFAULT
     finally:
         try:
-            print('closing')
             stream.close()
         except BaseException:
             pass
