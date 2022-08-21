@@ -1,4 +1,4 @@
-# Villager-API
+# Villager-API | Replaced by [`api.iapetus11.me`](https://github.com/Iapetus-11/api.iapetus11.me)
 A useful, Minecraft-related and otherwise API, designed to be used by [Villager Bot](https://github.com/Villager-Dev/Villager-Bot)
 * The api is currently running and accessible at `api.iapetus11.me`
 
